@@ -1,4 +1,3 @@
-// src/App.tsx
 import React from 'react';
 import {
    BrowserRouter as Router,
@@ -9,26 +8,19 @@ import {
 import { AuthProvider } from './contexts/AuthContext.tsx';
 import LandingPage from './components/LandingPage.tsx';
 import Login from './components/Login.tsx';
-import Signup from './components/Signup.tsx';
 import Logout from './components/Logout.tsx';
-import Dashboard from './components/Dashboard.tsx';
+import Signup from './components/Signup.tsx';
 import PrivateRoute from './components/PrivateRoute.tsx';
+import Dashboard from './components/Dashboard.tsx';
 
 function App() {
    return (
       <AuthProvider>
          <Router>
             <Routes>
-               {/* Rotta principale: Landing Page */}
                <Route path="/" element={<LandingPage />} />
-
-               {/* Rotta di Login */}
                <Route path="/login" element={<Login />} />
-
-               {/* Rotta di Registrazione */}
                <Route path="/signup" element={<Signup />} />
-
-               {/* Rotta protetta: Dashboard */}
                <Route
                   path="/dashboard"
                   element={
@@ -37,8 +29,6 @@ function App() {
                      </PrivateRoute>
                   }
                />
-
-               {/* Rotta protetta: Logout */}
                <Route
                   path="/logout"
                   element={
@@ -47,8 +37,6 @@ function App() {
                      </PrivateRoute>
                   }
                />
-
-               {/* Se l'utente digita un percorso inesistente, reindirizza alla LandingPage */}
                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
          </Router>

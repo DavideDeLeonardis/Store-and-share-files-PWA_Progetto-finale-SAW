@@ -1,4 +1,3 @@
-// src/components/FileList.tsx
 import React, { useEffect, useState } from 'react';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig.ts';

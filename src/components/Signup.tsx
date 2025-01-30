@@ -1,4 +1,3 @@
-// src/components/Signup.tsx
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.tsx';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +15,6 @@ const Signup: React.FC = () => {
       try {
          await signUp(email, password);
          setError('');
-         // Dopo il signup, reindirizza dove preferisci (es. /dashboard)
          navigate('/dashboard');
       } catch (err) {
          console.error(err);

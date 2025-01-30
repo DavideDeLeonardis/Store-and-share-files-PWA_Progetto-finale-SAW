@@ -1,4 +1,3 @@
-// src/contexts/AuthContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '../firebase/firebaseConfig.ts';
 import {
@@ -13,7 +12,7 @@ interface AuthContextType {
    user: User | null;
    login: (email: string, password: string) => Promise<void>;
    logout: () => Promise<void>;
-   signUp: (email: string, password: string) => Promise<void>; // Aggiunto signUp
+   signUp: (email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,7 +37,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       await signOut(auth);
    };
 
-   // La nuova funzione di registrazione
    const signUp = async (email: string, password: string) => {
       await createUserWithEmailAndPassword(auth, email, password);
    };
@@ -52,8 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export function useAuth() {
    const context = useContext(AuthContext);
-   if (!context) {
-      throw new Error('useAuth must be used within an AuthProvider');
-   }
+   if (!context) throw new Error('useAuth must be used within an AuthProvider');
+
    return context;
 }

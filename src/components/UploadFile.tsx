@@ -1,4 +1,3 @@
-// src/components/UploadFile.tsx
 import React, { useState } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
