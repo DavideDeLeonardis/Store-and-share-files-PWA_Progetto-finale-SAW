@@ -3,10 +3,16 @@
    "version": "0.1.0",
    "private": true,
    "dependencies": {
+      "@react-firebase/auth": "^0.2.10",
+      "@react-firebase/firestore": "^0.5.5",
       "cra-template-typescript": "1.2.0",
+      "firebase": "^11.2.0",
+      "googleapis": "^144.0.0",
       "react": "^19.0.0",
       "react-dom": "^19.0.0",
-      "react-scripts": "5.0.1"
+      "react-router-dom": "^6.28.2",
+      "react-scripts": "5.0.1",
+      "workbox-window": "^7.3.0"
    },
    "scripts": {
       "start": "react-scripts start",
