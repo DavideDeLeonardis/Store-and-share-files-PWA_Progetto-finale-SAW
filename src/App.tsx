@@ -12,6 +12,7 @@ import Logout from './components/Logout.tsx';
 import Signup from './components/Signup.tsx';
 import PrivateRoute from './components/PrivateRoute.tsx';
 import Dashboard from './components/Dashboard.tsx';
+import "./index.css"
 
 function App() {
    return (

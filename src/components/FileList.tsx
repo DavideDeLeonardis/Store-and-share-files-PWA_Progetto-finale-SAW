@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig.ts';
 import { useAuth } from '../contexts/AuthContext.tsx';
+import { Link } from 'react-router-dom';
+import { Document, Page, pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 interface FileData {
-   docId: string; // anziché "id"
+   docId: string;
    name: string;
    url: string;
    userId: string;
@@ -23,8 +27,10 @@ const FileList: React.FC = () => {
       const unsubscribe = onSnapshot(q, (snapshot) => {
          const fileList: FileData[] = [];
          snapshot.forEach((doc) => {
-            const data = doc.data() as Omit<FileData, 'docId'>; // escludi docId
-            fileList.push({ docId: doc.id, ...data });
+            fileList.push({
+               docId: doc.id,
+               ...(doc.data() as Omit<FileData, 'docId'>),
+            });
          });
          setFiles(fileList);
       });
@@ -42,16 +48,37 @@ const FileList: React.FC = () => {
          {files.length === 0 ? (
             <p>Nessun file caricato</p>
          ) : (
-            <ul>
+            <ul
+               style={{
+                  overflowX: 'auto',
+                  display: 'flex',
+                  justifyContent: 'left',
+                  gap: '20px',
+               }}
+            >
                {files.map((file) => (
-                  <li key={file.docId}>
-                     <a
-                        href={file.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                  <li key={file.docId} style={{ marginBottom: '2rem' }}>
+                     <Link to={file.url} target="_blank" rel="noreferrer">
+                        <strong>{file.name}</strong>
+                     </Link>
+
+                     <div
+                        style={{
+                           width: '300px',
+                           maxHeight: '40vh',
+                           overflowY: 'auto',
+                           border: '1px solid #ccc',
+                        }}
                      >
-                        {file.name}
-                     </a>
+                        <Document
+                           file={file.url}
+                           onLoadError={(error) =>
+                              console.error('Errore caricamento PDF:', error)
+                           }
+                        >
+                           <Page pageNumber={1} width={300} />
+                        </Document>
+                     </div>
                   </li>
                ))}
             </ul>

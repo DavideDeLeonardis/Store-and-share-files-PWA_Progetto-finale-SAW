@@ -9,9 +9,7 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
    const { user } = useAuth();
 
-   if (!user) {
-      return <Navigate to="/login" replace />;
-   }
+   if (!user) return <Navigate to="/" replace />;
 
    return <>{children}</>;
 };

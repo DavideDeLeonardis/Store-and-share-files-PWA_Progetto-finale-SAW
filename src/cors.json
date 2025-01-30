@@ -2,7 +2,7 @@
    {
       "origin": [
          "http://localhost:3000",
-         "https://www.tuo-dominio.com"
+         "https://store-and-share-files-pwa.web.app"
       ],
       "method": [
          "GET",
