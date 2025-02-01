@@ -1,9 +1,12 @@
-// src/components/UploadFile.tsx
+// src/components/UploadFile/index.tsx
+
 import React, { useState, useRef } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { storage, db } from '../firebase/firebaseConfig.ts';
-import { useAuth } from '../contexts/AuthContext.tsx';
+import { storage, db } from '../../firebase/firebaseConfig.ts';
+import { useAuth } from '../../contexts/AuthContext.tsx';
+
+import styles from './index.module.scss';
 
 const UploadFile: React.FC = () => {
    const { user } = useAuth();
@@ -44,12 +47,14 @@ const UploadFile: React.FC = () => {
             name: file.name,
             url: url,
             userId: user.uid,
+            path: filePath,
             createdAt: Timestamp.now(),
          });
 
          setUploadStatus('Upload completato con successo!');
-         setFile(null);
+         setTimeout(() => setUploadStatus(''), 5000);
 
+         setFile(null);
          if (fileInputRef.current) {
             fileInputRef.current.value = '';
          }
@@ -62,26 +67,31 @@ const UploadFile: React.FC = () => {
    };
 
    return (
-      <div>
-         <h3>Carica un file PDF</h3>
-         <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-            ref={fileInputRef}
-         />
-         <button onClick={handleUpload} disabled={isUploading}>
-            Carica
-         </button>
+      <div className={styles.uploadContainer}>
+         <h3 className={styles.title}>Carica un file PDF</h3>
 
-         {uploadStatus && <p>{uploadStatus}</p>}
+         <div className={styles.uploadRow}>
+            {/* Spinner a sinistra dell'input (condizionale) */}
+            {isUploading && <div className={styles.spinner} />}
 
-         {/* SPINNER */}
-         {isUploading && (
-            <div style={{ margin: '1rem 0' }}>
-               <div className="spinner" />
-            </div>
-         )}
+            <input
+               type="file"
+               accept="application/pdf"
+               onChange={handleFileChange}
+               ref={fileInputRef}
+               className={styles.fileInput}
+               disabled={isUploading}
+            />
+            <button
+               onClick={handleUpload}
+               disabled={isUploading}
+               className={styles.uploadButton}
+            >
+               Carica
+            </button>
+         </div>
+
+         {uploadStatus && <p className={styles.uploadStatus}>{uploadStatus}</p>}
       </div>
    );
 };

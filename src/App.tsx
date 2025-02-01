@@ -1,23 +1,21 @@
 import React from 'react';
-import {
-   BrowserRouter as Router,
-   Routes,
-   Route,
-   Navigate,
-} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
 import { AuthProvider } from './contexts/AuthContext.tsx';
-import LandingPage from './components/LandingPage.tsx';
-import Login from './components/Login.tsx';
-import Logout from './components/Logout.tsx';
-import Signup from './components/Signup.tsx';
-import PrivateRoute from './components/PrivateRoute.tsx';
-import Dashboard from './components/Dashboard.tsx';
-import "./index.css"
+import PrivateRoute from './components/PrivateRoute/index.tsx';
+import Logout from './components/Logout/index.tsx';
+
+import LandingPage from './components/pages/LandingPage/index.tsx';
+import Login from './components/pages/Login/index.tsx';
+import Signup from './components/pages/Signup/index.tsx';
+import Dashboard from './components/pages/Dashboard/index.tsx';
+
+import './assets/scss/index.scss';
 
 function App() {
    return (
       <AuthProvider>
-         <Router>
+         <BrowserRouter>
             <Routes>
                <Route path="/" element={<LandingPage />} />
                <Route path="/login" element={<Login />} />
@@ -40,7 +38,7 @@ function App() {
                />
                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
-         </Router>
+         </BrowserRouter>
       </AuthProvider>
    );
 }

@@ -1,0 +1,62 @@
+// FileList.module.scss
+
+$list-gap: 20px;
+$file-width: 300px;
+
+.fileListContainer {
+   // Se usi un wrapper <div> in FileList, puoi applicarlo qui
+   margin-top: 1rem;
+}
+
+.fileList {
+   display: flex;
+   flex-wrap: wrap; /* per andare a capo quando finisce lo spazio */
+   gap: $list-gap;
+
+   // Rimuovi overflowX: 'auto' se vuoi farli semplicemente avvolgere
+   // se preferisci entrambe le cose, puoi combinare. Dipende dalle tue necessità.
+}
+
+.fileItem {
+   width: $file-width;
+   margin-bottom: 2rem;
+   border: 1px solid #ccc;
+   padding: 0.5rem;
+   border-radius: 6px;
+   background-color: #fff;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+// Per troncare il nome dopo 30 caratteri
+.fileName {
+   display: inline-block; // o block
+   max-width: 250px; // dimensiona secondo preferenza
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   vertical-align: bottom;
+}
+
+// Anteprima PDF
+.pdfPreview {
+   margin-top: 0.5rem;
+   max-height: 300px;
+   overflow-y: auto;
+   border: 1px solid #ccc;
+}
+
+// Bottone Elimina
+.deleteButton {
+   margin-top: 0.5rem;
+   background-color: #b51818;
+   color: #fff;
+   border: none;
+   padding: 0.5rem 0.8rem;
+   border-radius: 4px;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+
+   &:hover {
+      background-color: darken(#b51818, 5%);
+   }
+}

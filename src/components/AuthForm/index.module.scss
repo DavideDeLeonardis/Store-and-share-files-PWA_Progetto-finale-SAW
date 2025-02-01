@@ -1,0 +1,88 @@
+// AuthForm.module.scss
+
+@use 'sass:color';
+@import '../../assets/scss/variables';
+
+.formContainer {
+   background-color: #fff;
+   border: 1px solid #eee;
+   padding: 2rem;
+   margin: 2rem auto;
+   max-width: 400px;
+   border-radius: $border-radius;
+   box-shadow: $box-shadow;
+   font-family: $font-family-base;
+}
+
+.title {
+   font-size: 1.8rem;
+   color: $primary-color;
+   margin-bottom: 1rem;
+   text-align: center;
+}
+
+.errorMessage {
+   color: $error-color;
+   margin-bottom: 1rem;
+   text-align: center;
+}
+
+.formField {
+   margin-bottom: 1rem;
+   display: flex;
+   flex-direction: column;
+
+   label {
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+   }
+
+   input {
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: $border-radius;
+      font-size: 1rem;
+      outline: none;
+
+      &:focus {
+         border-color: $primary-color;
+         box-shadow: 0 0 0 1px rgba($primary-color, 0.2);
+      }
+   }
+}
+
+.submitButton {
+   display: block;
+   width: 100%;
+   margin-top: 1rem;
+   background-color: $primary-color;
+   color: #fff;
+   border: none;
+   padding: 0.8rem 1.2rem;
+   font-size: 1rem;
+   border-radius: $border-radius;
+   cursor: pointer;
+   transition: background-color $transition-speed;
+
+   &:hover {
+      background-color: color.adjust(
+         $primary-color,
+         $lightness: -$link-hover-darken
+      );
+   }
+}
+
+.homeLink {
+   margin-top: 1rem;
+   text-align: center;
+
+   a {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: bold;
+
+      &:hover {
+         text-decoration: underline;
+      }
+   }
+}

@@ -1,6 +1,6 @@
 {
-   "short_name": "MyPWA",
-   "name": "My Progressive Web App",
+   "short_name": "StoreAndShare",
+   "name": "Store and Share files PWA",
    "icons": [
       {
          "src": "icon-192.png",
