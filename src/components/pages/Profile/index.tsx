@@ -190,16 +190,17 @@ const Profile: React.FC = () => {
             </div>
 
             <button
-               onClick={handleDeleteProfile}
-               className={styles.deleteButton}
-            >
-               Elimina Profilo
-            </button>
-            <button
                onClick={handleDeleteAllFiles}
                className={styles.deleteButton}
             >
                Elimina Tutti i File
+            </button>
+
+            <button
+               onClick={handleDeleteProfile}
+               className={styles.deleteButton}
+            >
+               Elimina Profilo
             </button>
 
             {actionMessage && (

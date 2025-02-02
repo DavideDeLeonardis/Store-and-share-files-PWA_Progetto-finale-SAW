@@ -57,7 +57,6 @@ const FileList: React.FC = () => {
          const path = file.path || `files/${user.uid}/${file.name}`;
          const storageReference = storageRef(storage, path);
          await deleteObject(storageReference);
-         console.log(`File ${file.name} eliminato con successo!`);
       } catch (error) {
          console.error('Errore nell’eliminazione del file:', error);
       }
