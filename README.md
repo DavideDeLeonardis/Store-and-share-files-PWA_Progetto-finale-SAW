@@ -2,6 +2,7 @@
 
 useCallback
 useEffect
+createContext, AuthContext.Provider
 destructuring
 
 Firebase Storage:
