@@ -25,9 +25,7 @@ const Dashboard: React.FC = () => {
 
          {user && (
             <div className={styles.userInfo}>
-               <p>
-                  Ciao, <strong>{profile ? profile.username : "Utente"}</strong>.
-               </p>
+               Ciao, <strong>{profile ? profile.username : 'Utente'}</strong>
             </div>
          )}
 
