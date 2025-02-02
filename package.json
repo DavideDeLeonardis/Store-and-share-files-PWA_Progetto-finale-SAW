@@ -6,6 +6,7 @@
       "@react-firebase/auth": "^0.2.10",
       "@react-firebase/firestore": "^0.5.5",
       "cra-template-typescript": "1.2.0",
+      "dotenv": "^16.4.7",
       "firebase": "^11.2.0",
       "googleapis": "^144.0.0",
       "pdfjs": "^2.5.3",

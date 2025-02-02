@@ -1,4 +1,3 @@
-// src/components/FileList.tsx
 import React, { useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Link } from 'react-router-dom';

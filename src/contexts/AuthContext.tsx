@@ -23,9 +23,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
    const [user, setUser] = useState<User | null>(null);
 
    useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-         setUser(currentUser);
-      });
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) =>
+         setUser(currentUser)
+      );
       return unsubscribe;
    }, []);
 
@@ -33,9 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       await signInWithEmailAndPassword(auth, email, password);
    };
 
-   const logout = async () => {
-      await signOut(auth);
-   };
+   const logout = async () => await signOut(auth);
 
    const signUp = async (email: string, password: string) => {
       await createUserWithEmailAndPassword(auth, email, password);

@@ -1,6 +1,6 @@
-// src/components/Logout.tsx
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext.tsx';
+
 import styles from './index.module.scss';
 
 const Logout: React.FC = () => {

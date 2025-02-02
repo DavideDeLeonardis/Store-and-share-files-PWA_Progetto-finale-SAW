@@ -1,8 +1,7 @@
-// src/components/UploadFile/index.tsx
-
 import React, { useState, useRef } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
+
 import { storage, db } from '../../firebase/firebaseConfig.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
 
@@ -17,9 +16,8 @@ const UploadFile: React.FC = () => {
    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files.length > 0) {
+      if (e.target.files && e.target.files.length > 0)
          setFile(e.target.files[0]);
-      }
    };
 
    const handleUpload = async () => {
@@ -55,9 +53,7 @@ const UploadFile: React.FC = () => {
          setTimeout(() => setUploadStatus(''), 5000);
 
          setFile(null);
-         if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-         }
+         if (fileInputRef.current) fileInputRef.current.value = '';
       } catch (e) {
          console.error('[handleUpload] Errore nell’upload:', e);
          setUploadStatus('Errore durante il caricamento del file');
@@ -71,7 +67,6 @@ const UploadFile: React.FC = () => {
          <h3 className={styles.title}>Carica un file PDF</h3>
 
          <div className={styles.uploadRow}>
-            {/* Spinner a sinistra dell'input (condizionale) */}
             {isUploading && <div className={styles.spinner} />}
 
             <input
