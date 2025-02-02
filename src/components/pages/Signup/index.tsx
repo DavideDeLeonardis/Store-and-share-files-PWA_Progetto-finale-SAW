@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { doc, setDoc } from 'firebase/firestore';
 
 import { useAuth } from '../../../contexts/AuthContext.tsx';
+import { db } from '../../../firebase/firebaseConfig.ts';
 import AuthForm from '../../AuthForm/index.tsx';
-import useFirebaseErrorMessage from '../../../hooks/useFirebaseErrorMessage.ts';
 
 const Signup: React.FC = () => {
    const { signUp } = useAuth();
    const navigate = useNavigate();
-   const { getErrorMessage } = useFirebaseErrorMessage();
 
+   const [username, setUsername] = useState('');
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [error, setError] = useState('');
@@ -17,13 +18,20 @@ const Signup: React.FC = () => {
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-         await signUp(email, password);
+         const userCredential = await signUp(email, password);
          setError('');
+
+         const uid = userCredential.user.uid;
+         await setDoc(doc(db, 'users', uid), {
+            username,
+            email,
+            createdAt: new Date(),
+         });
+
          navigate('/dashboard');
       } catch (err) {
          console.error(err);
-         const message = getErrorMessage(err);
-         setError(message);
+         setError('Errore nella registrazione');
       }
    };
 
@@ -31,6 +39,8 @@ const Signup: React.FC = () => {
       <AuthForm
          title="Registrazione"
          error={error}
+         username={username}
+         onUsernameChange={(e) => setUsername(e.target.value)}
          email={email}
          password={password}
          onEmailChange={(e) => setEmail(e.target.value)}

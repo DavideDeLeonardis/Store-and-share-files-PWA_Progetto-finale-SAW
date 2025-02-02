@@ -19,6 +19,29 @@
          font-size: 2rem;
          color: $primary-color;
       }
+
+      .navLinks {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         gap: 20px;
+
+         .profileLink {
+            background-color: $primary-color;
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            border-radius: $border-radius;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+
+            &:hover {
+               background-color: $secondary-color;
+            }
+         }
+      }
    }
 
    .userInfo {

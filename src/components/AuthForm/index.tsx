@@ -6,8 +6,10 @@ import styles from './index.module.scss';
 interface AuthFormProps {
    title: string;
    error: string;
+   username?: string;
    email: string;
    password: string;
+   onUsernameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
    onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
    onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
    onSubmit: (e: React.FormEvent) => void;
@@ -17,8 +19,10 @@ interface AuthFormProps {
 const AuthForm: React.FC<AuthFormProps> = ({
    title,
    error,
+   username,
    email,
    password,
+   onUsernameChange,
    onEmailChange,
    onPasswordChange,
    onSubmit,
@@ -31,6 +35,18 @@ const AuthForm: React.FC<AuthFormProps> = ({
          {error && <p className={styles.errorMessage}>{error}</p>}
 
          <form onSubmit={onSubmit}>
+            {onUsernameChange && (
+               <div className={styles.formField}>
+                  <label>Nome utente</label>
+                  <input
+                     type="text"
+                     required
+                     value={username}
+                     onChange={onUsernameChange}
+                  />
+               </div>
+            )}
+
             <div className={styles.formField}>
                <label>Email</label>
                <input
@@ -40,6 +56,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
                   onChange={onEmailChange}
                />
             </div>
+
             <div className={styles.formField}>
                <label>Password</label>
                <input
@@ -54,6 +71,17 @@ const AuthForm: React.FC<AuthFormProps> = ({
                {buttonLabel}
             </button>
          </form>
+
+         {title.toLowerCase() === 'login' ? (
+            <p className={styles.altAuthLink}>
+               Non sei registrato? <Link to="/signup">Registrati</Link>
+            </p>
+         ) : title.toLowerCase().includes('registrazione') ||
+           title.toLowerCase() === 'signup' ? (
+            <p className={styles.altAuthLink}>
+               Hai già un account? <Link to="/login">Accedi</Link>
+            </p>
+         ) : null}
 
          <p className={styles.homeLink}>
             <Link to="/">Torna alla home</Link>

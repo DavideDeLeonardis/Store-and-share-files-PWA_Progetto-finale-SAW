@@ -1,7 +1,7 @@
 @import '../../assets/scss/variables';
 
 .logoutButton {
-   background-color: $primary-color;
+   background-color: $error-color;
    color: #fff;
    border: none;
    padding: 0.6rem 1.2rem;
@@ -11,6 +11,6 @@
    transition: background-color 0.2s ease;
 
    &:hover {
-      background-color: $secondary-color;
+      background-color: #ff4a4a;
    }
 }

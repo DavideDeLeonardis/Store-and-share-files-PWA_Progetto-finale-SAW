@@ -72,8 +72,24 @@
    }
 
    .homeLink {
+      margin-top: 2rem;
+      text-align: center;
+
+      a {
+         color: $primary-color;
+         text-decoration: none;
+         font-weight: bold;
+
+         &:hover {
+            text-decoration: underline;
+         }
+      }
+   }
+
+   .altAuthLink {
       margin-top: 1rem;
       text-align: center;
+      font-size: 0.9rem;
 
       a {
          color: $primary-color;
