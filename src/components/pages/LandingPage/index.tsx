@@ -18,8 +18,11 @@ const LandingPage: React.FC = () => {
          </div>
 
          <p className={styles.footerNote}>
-            Inizia subito a caricare i tuoi file in modo semplice e portali
-            sempre con te!
+            Benvenuto in Store & Share Files PWA, la piattaforma per archiviare,
+            gestire e condividere i tuoi documenti in modo semplice e sicuro.
+            Con la nostra app potrai caricare, visualizzare e accedere ai tuoi
+            file ovunque tu sia. Installa l'app sul tuo dispositivo e porta con
+            te tutti i tuoi file.
          </p>
       </div>
    );
