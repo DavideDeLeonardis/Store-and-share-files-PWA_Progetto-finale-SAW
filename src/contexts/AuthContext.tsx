@@ -1,5 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth } from '../firebase/firebaseConfig.ts';
+import React, {
+   createContext,
+   useContext,
+   useState,
+   useEffect,
+   FC,
+} from 'react';
 import {
    onAuthStateChanged,
    signInWithEmailAndPassword,
@@ -10,53 +15,61 @@ import {
 } from 'firebase/auth';
 import { getDoc, doc } from 'firebase/firestore';
 
-import { db } from '../firebase/firebaseConfig.ts';
+import { db, auth } from '../firebase/firebaseConfig.ts';
 
-export interface UserProfile {
-   username: string;
-}
-
-interface AuthContextType {
-   user: User | null;
-   profile: UserProfile | null;
-   login: (email: string, password: string) => Promise<void>;
-   logout: () => Promise<void>;
-   signUp: (email: string, password: string) => Promise<UserCredential>;
-}
+import {
+   UserProfile,
+   AuthContextType,
+   AuthProviderProps,
+} from './interfaces.ts';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
-   children,
-}) => {
+/**
+ * Gestisce lo stato di autenticazione e il profilo dell'utente, tramite Firebase Auth e Firestore.
+ * Context contiene: user, profile, login, logout, signUp.
+ */
+export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
    const [user, setUser] = useState<User | null>(null);
    const [profile, setProfile] = useState<UserProfile | null>(null);
 
    useEffect(() => {
+      // Quando lo stato di autenticazione cambia, aggiorna lo stato dell'utente e del profilo.
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
          setUser(currentUser);
-         if (currentUser) {
+
+         if (currentUser)
             try {
+               // Riferimento al documento del profilo utente in Firestore.
                const docRef = doc(db, 'users', currentUser.uid);
                const docSnap = await getDoc(docRef);
+
+               // Se il documento esiste, aggiorna lo stato del profilo.
                if (docSnap.exists()) {
                   const data = docSnap.data() as UserProfile;
                   setProfile(data);
-               } else setProfile(null);
+               } else {
+                  setProfile(null);
+               }
             } catch (error) {
-               console.error('Errore nel recupero del profilo:', error);
+               console.error('Errore fetch user profile:', error);
                setProfile(null);
             }
-         } else setProfile(null);
+         else {
+            // Se l'utente si disconnette, azzera il profilo.
+            setProfile(null);
+         }
       });
+
+      // Cleanup quando unmount del componente.
       return unsubscribe;
    }, []);
 
-   const login = async (email: string, password: string) => {
+   const login = async (email: string, password: string): Promise<void> => {
       await signInWithEmailAndPassword(auth, email, password);
    };
 
-   const logout = async () => {
+   const logout = async (): Promise<void> => {
       await signOut(auth);
    };
 
@@ -64,14 +77,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       email: string,
       password: string
    ): Promise<UserCredential> => {
-      const userCredential = await createUserWithEmailAndPassword(
-         auth,
-         email,
-         password
-      );
-      return userCredential;
+      return await createUserWithEmailAndPassword(auth, email, password);
    };
 
+   // Context passato a tutti i componenti figli.
    return (
       <AuthContext.Provider value={{ user, profile, login, logout, signUp }}>
          {children}
@@ -79,9 +88,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
    );
 };
 
-export function useAuth() {
+/**
+ * Custom hook per utilizzare il context di autenticazione.
+ */
+export function useAuth(): AuthContextType {
    const context = useContext(AuthContext);
-   if (!context) throw new Error('useAuth must be used within an AuthProvider');
+
+   if (!context) throw new Error('useAuth deve essere usato con AuthProvider.');
 
    return context;
 }

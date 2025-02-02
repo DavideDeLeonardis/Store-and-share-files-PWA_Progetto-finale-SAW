@@ -10,7 +10,7 @@ export function registerServiceWorker() {
                )
             )
             .catch((error) =>
-               console.error('Service Worker registration failed:', error)
+               console.error('Registrazione Service Worker fallita:', error)
             );
       });
 }

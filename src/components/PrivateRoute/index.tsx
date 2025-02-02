@@ -3,11 +3,10 @@ import { Navigate } from 'react-router-dom';
 
 import { useAuth } from '../../contexts/AuthContext.tsx';
 
-interface PrivateRouteProps {
-   children: React.ReactNode;
-}
-
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+/**
+ * Route che permette di accedere solo se l'utente è loggato
+ */
+const PrivateRoute = ({ children }) => {
    const { user } = useAuth();
 
    if (!user) return <Navigate to="/" replace />;

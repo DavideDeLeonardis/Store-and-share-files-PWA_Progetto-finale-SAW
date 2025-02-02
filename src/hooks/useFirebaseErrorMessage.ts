@@ -1,33 +1,29 @@
 import { FirebaseError } from 'firebase/app';
 
-/*
- * Custom hook per mappare i codici di errore di Firebase a messaggi utente
+/**
+ * Custom hook per mappare i codici di errore di Firebase a messaggi utente.
+ * @returns getErrorMessage: funzione per ottenere il messaggio di errore da mostrare all'utente
  */
 
-function mapFirebaseErrorCodeToMessage(code: string): string {
-   switch (code) {
-      case 'auth/email-already-in-use':
-         return 'Email già in uso.';
-      case 'auth/weak-password':
-         return 'La password deve contenere almeno 6 caratteri.';
-      case 'auth/invalid-email':
-         return 'Indirizzo email non valido.';
-      case 'auth/user-not-found':
-         return 'Utente non trovato.';
-      case 'auth/wrong-password':
-         return 'Password errata.';
-      default:
-         return 'Si è verificato un errore. Riprova.';
-   }
-}
+const errorMessages: Record<string, string> = {
+   'auth/email-already-in-use': 'Email già in uso.',
+   'auth/weak-password': 'La password deve contenere almeno 6 caratteri.',
+   'auth/invalid-email': 'Indirizzo email non valido.',
+   'auth/user-not-found': 'Utente non trovato.',
+   'auth/wrong-password': 'Password errata.',
+};
+
+const mapFirebaseErrorCodeToMessage = (code: string): string => {
+   return errorMessages[code] || 'Si è verificato un errore. Riprova.';
+};
 
 const useFirebaseErrorMessage = () => {
-   function getErrorMessage(error: unknown) {
+   const getErrorMessage = (error: unknown): string => {
       if (error instanceof FirebaseError)
          return mapFirebaseErrorCodeToMessage(error.code);
 
       return 'Si è verificato un errore inatteso.';
-   }
+   };
 
    return { getErrorMessage };
 };
