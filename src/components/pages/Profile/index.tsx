@@ -122,16 +122,44 @@ const Profile: React.FC = () => {
             where('userId', '==', user.uid)
          );
          const querySnapshot = await getDocs(q);
+
+         const errors: string[] = [];
+
          const deletePromises = querySnapshot.docs.map(async (docSnap) => {
-            const fileData = docSnap.data();
-            const filePath =
-               fileData.path || `files/${user.uid}/${fileData.name}`;
-            const fileStorageRef = storageRef(storage, filePath);
-            await deleteObject(fileStorageRef);
-            await deleteDoc(doc(db, 'files', docSnap.id));
+            try {
+               const fileData = docSnap.data();
+               const filePath =
+                  fileData.path || `files/${user.uid}/${fileData.name}`;
+               const fileStorageRef = storageRef(storage, filePath);
+               await deleteObject(fileStorageRef);
+               await deleteDoc(doc(db, 'files', docSnap.id));
+            } catch (error: any) {
+               if (error.code === 'storage/object-not-found') {
+                  console.warn(
+                     `File non trovato, considerato eliminato: ${docSnap.id}`
+                  );
+                  await deleteDoc(doc(db, 'files', docSnap.id));
+               } else {
+                  console.error(
+                     `Errore nell'eliminazione del file ${docSnap.id}:`,
+                     error.message
+                  );
+                  errors.push(
+                     `Errore con il file ${docSnap.id} (${error.message})`
+                  );
+               }
+            }
          });
+
          await Promise.all(deletePromises);
-         setActionMessage('Tutti i file sono stati eliminati.');
+
+         if (errors.length > 0) {
+            setActionMessage(
+               `Alcuni file non sono stati eliminati: ${errors.join(', ')}`
+            );
+         } else {
+            setActionMessage('Tutti i file sono stati eliminati.');
+         }
          setFilesDeleteConfirm(false);
       } catch (error) {
          console.error("Errore nell'eliminazione dei file:", error);

@@ -4,11 +4,13 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 import { storage, db } from '../../firebase/firebaseConfig.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
+import useNotification from '../../hooks/useNotification.ts';
 
 import styles from './index.module.scss';
 
 const UploadFile: React.FC = () => {
    const { user } = useAuth();
+   const { notify, notificationError } = useNotification();
    const [file, setFile] = useState<File | null>(null);
    const [uploadStatus, setUploadStatus] = useState<string>('');
    const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -43,15 +45,19 @@ const UploadFile: React.FC = () => {
 
          await addDoc(collection(db, 'files'), {
             name: file.name,
-            url: url,
+            url,
             userId: user.uid,
             path: filePath,
             createdAt: Timestamp.now(),
          });
 
          setUploadStatus('Upload completato con successo!');
-         setTimeout(() => setUploadStatus(''), 5000);
 
+         notify('Upload completato', {
+            body: `Il file "${file.name}" è stato caricato con successo.`,
+            icon: '/icon-192.png',
+         });
+         setTimeout(() => setUploadStatus(''), 5000);
          setFile(null);
          if (fileInputRef.current) fileInputRef.current.value = '';
       } catch (e) {
@@ -87,6 +93,10 @@ const UploadFile: React.FC = () => {
          </div>
 
          {uploadStatus && <p className={styles.uploadStatus}>{uploadStatus}</p>}
+
+         {notificationError && (
+            <div style={{ marginTop: '10px' }}>{notificationError}</div>
+         )}
       </div>
    );
 };

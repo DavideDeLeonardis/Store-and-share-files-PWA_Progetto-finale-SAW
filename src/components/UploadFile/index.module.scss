@@ -14,7 +14,6 @@
    color: $primary-color;
 }
 
-// Row che contiene spinner, input e bottone
 .uploadRow {
    display: flex;
    align-items: center;
@@ -22,7 +21,7 @@
 }
 
 .fileInput {
-   flex: 1; // Occupare lo spazio rimanente
+   flex: 1;
    padding: 0.4rem;
    border: 1px solid #ccc;
    border-radius: 4px;
@@ -35,7 +34,6 @@
    }
 }
 
-// bottone "Carica"
 .uploadButton {
    background-color: $primary-color;
    color: #fff;
@@ -56,10 +54,9 @@
    }
 }
 
-// Spinner
 .spinner {
    border: 6px solid #f3f3f3;
-   border-top: 6px solid $secondary-color; // se vuoi un colore secondario
+   border-top: 6px solid $secondary-color;
    border-radius: 50%;
    width: 24px;
    height: 24px;
@@ -76,7 +73,6 @@
    }
 }
 
-// Messaggio di stato (Caricamento in corso... / Upload completato...)
 .uploadStatus {
    margin-top: 0.5rem;
    font-size: 0.9rem;
