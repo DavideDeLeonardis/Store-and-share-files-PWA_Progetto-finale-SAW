@@ -43,6 +43,8 @@ const AuthForm: React.FC<AuthFormProps> = ({
                      required
                      value={username}
                      onChange={onUsernameChange}
+                     pattern=".*\S.*"
+                     title="Il nome utente non può essere vuoto o contenere solo spazi."
                   />
                </div>
             )}

@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
 
 import { useAuth } from '../../../contexts/AuthContext.tsx';
+import useFirebaseErrorMessage from '../../../hooks/useFirebaseErrorMessage.ts';
 import { db } from '../../../firebase/firebaseConfig.ts';
 import AuthForm from '../../AuthForm/index.tsx';
 
 const Signup: React.FC = () => {
    const { signUp } = useAuth();
    const navigate = useNavigate();
+   const { getErrorMessage } = useFirebaseErrorMessage();
 
    const [username, setUsername] = useState('');
    const [email, setEmail] = useState('');
@@ -31,7 +33,8 @@ const Signup: React.FC = () => {
          navigate('/dashboard');
       } catch (err) {
          console.error(err);
-         setError('Errore nella registrazione');
+         const message = getErrorMessage(err);
+         setError(message);
       }
    };
 

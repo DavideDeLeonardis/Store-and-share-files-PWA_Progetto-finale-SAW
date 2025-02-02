@@ -18,7 +18,8 @@ const LandingPage: React.FC = () => {
          </div>
 
          <p className={styles.footerNote}>
-            Inizia subito a caricare e condividere i tuoi file in modo semplice!
+            Inizia subito a caricare i tuoi file in modo semplice e portali
+            sempre con te!
          </p>
       </div>
    );
