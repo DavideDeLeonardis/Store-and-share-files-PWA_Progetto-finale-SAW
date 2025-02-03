@@ -8,43 +8,54 @@ $file-width: 300px;
       display: flex;
       flex-wrap: wrap;
       gap: $list-gap;
+
+      .fileItem {
+         width: calc(100% / 3 - $list-gap);
+         max-width: 400px;
+         margin-bottom: 2rem;
+         border: 1px solid #ccc;
+         padding: 10px;
+         border-radius: 6px;
+         background-color: #fff;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+         overflow: hidden;
+
+         .fileName {
+            display: inline-block;
+            white-space: nowrap;
+         }
+
+         .pdfPreview {
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+         }
+
+         .deleteButton {
+            margin-top: 0.5rem;
+            background-color: #b51818;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+               background-color: darken(#b51818, 5%);
+            }
+         }
+      }
    }
 
-   .fileItem {
-      width: calc(100% / 3 - $list-gap);
-      max-width: 400px;
-      margin-bottom: 2rem;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 6px;
-      background-color: #fff;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
+   @media (max-width: 768px) {
+      .fileList {
+         flex-direction: column;
+         gap: 20px;
 
-      .fileName {
-         display: inline-block;
-         white-space: nowrap;
-      }
-
-      .pdfPreview {
-         margin: 15px 0;
-         max-height: 300px;
-         overflow-y: auto;
-         border: 1px solid #ccc;
-      }
-
-      .deleteButton {
-         margin-top: 0.5rem;
-         background-color: #b51818;
-         color: #fff;
-         border: none;
-         padding: 0.5rem 0.8rem;
-         border-radius: 4px;
-         cursor: pointer;
-         transition: background-color 0.2s ease;
-
-         &:hover {
-            background-color: darken(#b51818, 5%);
+         .fileItem {
+            width: 100%;
          }
       }
    }

@@ -1,10 +1,19 @@
 # Store-and-share files PWA
 
+
+CACHE LOGIN
+
+
+
+https://store-and-share-files-pwa.firebaseapp.com
+
 useCallback
 useEffect
 createContext, AuthContext.Provider
 destructuring
 em, rem
+ServiceWorker
+Promises
 
 Firebase Storage:
    progettato per memorizzare i file veri e propri
