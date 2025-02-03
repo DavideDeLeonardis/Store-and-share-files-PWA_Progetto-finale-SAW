@@ -14,6 +14,7 @@ interface AuthFormProps {
    onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
    buttonLabel: string;
+   isLoading?: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ const AuthForm: FC<AuthFormProps> = ({
    onPasswordChange,
    onSubmit,
    buttonLabel,
+   isLoading,
 }) => {
    return (
       <div className={styles.formContainer}>
@@ -72,10 +74,17 @@ const AuthForm: FC<AuthFormProps> = ({
                />
             </div>
 
-            <button type="submit" className={styles.submitButton}>
+            <button
+               type="submit"
+               className={styles.submitButton}
+               disabled={isLoading}
+            >
                {buttonLabel}
             </button>
          </form>
+
+         {/* Spinner se il form è in caricamento */}
+         {isLoading && <div className={styles.spinner} />}
 
          {title.toLowerCase() === 'login' ? (
             <p className={styles.altAuthLink}>

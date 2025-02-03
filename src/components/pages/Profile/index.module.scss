@@ -9,18 +9,13 @@
    align-items: center;
    font-family: Arial, sans-serif;
 
-   .profileTitle {
-      font-size: 2rem;
-      color: $primary-color;
-      margin-bottom: 2rem;
-   }
-
    .buttonContainer {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       width: 100%;
       max-width: 400px;
+      margin-top: 50px;
 
       .resetWrapper {
          display: flex;
@@ -117,18 +112,5 @@
    }
    100% {
       transform: rotate(360deg);
-   }
-}
-
-.backLink {
-   margin-top: 2rem;
-   text-align: center;
-   font-size: 1rem;
-   a {
-      color: $primary-color;
-      text-decoration: none;
-      &:hover {
-         text-decoration: underline;
-      }
    }
 }

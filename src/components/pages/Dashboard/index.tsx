@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { useAuth } from '../../../contexts/AuthContext.tsx';
+import NavBar from '../../NavBar/index.tsx';
 import UploadFile from '../../UploadFile/index.tsx';
 import FileList from '../../FileList/index.tsx';
-import Logout from '../../Logout/index.tsx';
 
 import styles from './index.module.scss';
 
@@ -13,15 +12,7 @@ const Dashboard: React.FC = () => {
 
    return (
       <div className={styles.dashboardContainer}>
-         <div className={styles.dashHeader}>
-            <h1 className={styles.dashboardTitle}>Dashboard</h1>
-            <div className={styles.navLinks}>
-               <Link to="/profile" className={styles.profileLink}>
-                  Profilo
-               </Link>
-               <Logout />
-            </div>
-         </div>
+         <NavBar currentPage="dashboard" />
 
          {user && (
             <div className={styles.userInfo}>

@@ -16,11 +16,13 @@ const Signup: React.FC = () => {
    const [email, setEmail] = useState<string>('');
    const [password, setPassword] = useState<string>('');
    const [error, setError] = useState<string>('');
+   const [isLoading, setIsLoading] = useState<boolean>(false);
 
    const handleSubmit = async (
       e: React.FormEvent<HTMLFormElement>
    ): Promise<void> => {
       e.preventDefault();
+      setIsLoading(true);
 
       try {
          const userCredential = await signUp(email, password);
@@ -39,6 +41,8 @@ const Signup: React.FC = () => {
          console.error(err);
          const message: string = getErrorMessage(err);
          setError(message);
+      } finally {
+         setIsLoading(false);
       }
    };
 
@@ -60,6 +64,7 @@ const Signup: React.FC = () => {
          }
          onSubmit={handleSubmit}
          buttonLabel="Registrati"
+         isLoading={isLoading}
       />
    );
 };
