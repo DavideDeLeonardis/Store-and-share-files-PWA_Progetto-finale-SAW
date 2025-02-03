@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './index.module.scss';
@@ -12,11 +12,11 @@ interface AuthFormProps {
    onUsernameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
    onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
    onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-   onSubmit: (e: React.FormEvent) => void;
+   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
    buttonLabel: string;
 }
 
-const AuthForm: React.FC<AuthFormProps> = ({
+const AuthForm: FC<AuthFormProps> = ({
    title,
    error,
    username,

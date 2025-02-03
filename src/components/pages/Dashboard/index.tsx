@@ -25,7 +25,8 @@ const Dashboard: React.FC = () => {
 
          {user && (
             <div className={styles.userInfo}>
-               Ciao, <strong>{profile ? profile.username : 'Utente'}</strong>
+               Ciao <strong>{profile ? profile.username : 'Utente'}</strong>,
+               carica un file PDF per iniziare!
             </div>
          )}
 

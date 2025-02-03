@@ -10,19 +10,22 @@ const Login: React.FC = () => {
    const navigate = useNavigate();
    const { getErrorMessage } = useFirebaseErrorMessage();
 
-   const [email, setEmail] = useState('');
-   const [password, setPassword] = useState('');
-   const [error, setError] = useState('');
+   const [email, setEmail] = useState<string>('');
+   const [password, setPassword] = useState<string>('');
+   const [error, setError] = useState<string>('');
 
-   const handleSubmit = async (e: React.FormEvent) => {
+   const handleSubmit = async (
+      e: React.FormEvent<HTMLFormElement>
+   ): Promise<void> => {
       e.preventDefault();
+
       try {
          await login(email, password);
          setError('');
          navigate('/dashboard');
-      } catch (err) {
+      } catch (err: unknown) {
          console.error(err);
-         const message = getErrorMessage(err);
+         const message: string = getErrorMessage(err);
          setError(message);
       }
    };
@@ -33,8 +36,12 @@ const Login: React.FC = () => {
          error={error}
          email={email}
          password={password}
-         onEmailChange={(e) => setEmail(e.target.value)}
-         onPasswordChange={(e) => setPassword(e.target.value)}
+         onEmailChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(e.target.value)
+         }
+         onPasswordChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(e.target.value)
+         }
          onSubmit={handleSubmit}
          buttonLabel="Accedi"
       />
