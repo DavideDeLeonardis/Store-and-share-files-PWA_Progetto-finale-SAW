@@ -14,12 +14,11 @@ const DeleteProfileButton: React.FC = () => {
    const [actionMessage, setActionMessage] = useState<string>('');
 
    /**
-    * Gestisce l'eliminazione del profilo utente.
-    * Al secondo click, elimina il documento del profilo in Firestore e il profilo in Firebase Auth.
+    * Gestisce l'eliminazione del profilo.
+    * La prima pressione imposta lo stato di conferma; la seconda esegue l'eliminazione.
     */
    const handleDeleteProfile = async (): Promise<void> => {
       if (!user) return;
-
       if (!profileDeleteConfirm) {
          setProfileDeleteConfirm(true);
          setActionMessage(
@@ -34,7 +33,9 @@ const DeleteProfileButton: React.FC = () => {
          setActionMessage('Profilo eliminato con successo.');
       } catch (error) {
          console.error("Errore nell'eliminazione del profilo:", error);
-         setActionMessage("Errore nell'eliminazione del profilo.");
+         setActionMessage(
+            "Errore nell'eliminazione del profilo. Potrebbe essere necessaria una re-autenticazione."
+         );
       }
    };
 

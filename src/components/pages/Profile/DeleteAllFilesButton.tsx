@@ -14,24 +14,18 @@ import { db, storage } from '../../../firebase/firebaseConfig.ts';
 
 import styles from './index.module.scss';
 
-/**
- * Componente DeleteAllFilesButton
- *
- * Permette all'utente di eliminare tutti i file caricati.
- * Richiede una conferma a doppio click per evitare eliminazioni accidentali.
- */
 const DeleteAllFilesButton: React.FC = () => {
    const { user } = useAuth();
    const [filesDeleteConfirm, setFilesDeleteConfirm] = useState<boolean>(false);
    const [actionMessage, setActionMessage] = useState<string>('');
+   const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
    /**
-    * Gestisce l'eliminazione di tutti i file caricati dall'utente.
-    * Al secondo click, elimina ogni file dallo Storage e il relativo documento in Firestore.
+    * Gestisce l'eliminazione di tutti i file.
+    * La prima pressione imposta lo stato di conferma; la seconda esegue l'operazione.
     */
    const handleDeleteAllFiles = async (): Promise<void> => {
       if (!user) return;
-
       if (!filesDeleteConfirm) {
          setFilesDeleteConfirm(true);
          setActionMessage(
@@ -39,6 +33,7 @@ const DeleteAllFilesButton: React.FC = () => {
          );
          return;
       }
+      setIsDeleting(true);
 
       try {
          // Query per ottenere tutti i file dell'utente
@@ -56,14 +51,14 @@ const DeleteAllFilesButton: React.FC = () => {
                const fileData = docSnap.data();
                const filePath: string =
                   fileData.path || `files/${user.uid}/${fileData.name}`;
-               await deleteObject(storageRef(storage, filePath));
+               const fileStorageRef = storageRef(storage, filePath);
+               await deleteObject(fileStorageRef);
                await deleteDoc(doc(db, 'files', docSnap.id));
             } catch (error: any) {
                if (error.code === 'storage/object-not-found') {
                   console.warn(
                      `File non trovato, considerato eliminato: ${docSnap.id}`
                   );
-
                   await deleteDoc(doc(db, 'files', docSnap.id));
                } else {
                   console.error(
@@ -90,14 +85,22 @@ const DeleteAllFilesButton: React.FC = () => {
       } catch (error) {
          console.error("Errore nell'eliminazione dei file:", error);
          setActionMessage("Errore nell'eliminazione dei file.");
+      } finally {
+         setIsDeleting(false);
       }
    };
 
    return (
       <>
-         <button onClick={handleDeleteAllFiles} className={styles.deleteButton}>
+         <button
+            onClick={handleDeleteAllFiles}
+            className={styles.deleteButton}
+            disabled={isDeleting}
+         >
             Elimina Tutti i File
          </button>
+
+         {isDeleting && <div className={styles.spinner} />}
 
          {actionMessage && (
             <p className={styles.actionMessage}>{actionMessage}</p>

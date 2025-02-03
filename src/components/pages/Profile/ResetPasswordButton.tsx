@@ -20,17 +20,15 @@ const ResetPasswordButton: React.FC = () => {
    const [isUpdatingPassword, setIsUpdatingPassword] = useState<boolean>(false);
 
    /**
-    * Gestisce il reset della password utente. Chiede un secondo click per
-    * confermare l'eliminazione del profilo.
+    * Gestisce il reset della password.
+    * Se la re-autenticazione è richiesta, verifica anche la password attuale.
     */
    const handleResetPassword = async (): Promise<void> => {
       if (!user) return;
-
       if (!newPassword) {
          setResetStatus('Inserisci una nuova password.');
          return;
       }
-
       if (newPassword.length < 6) {
          setResetStatus('La password deve contenere almeno 6 caratteri.');
          return;
@@ -42,10 +40,12 @@ const ResetPasswordButton: React.FC = () => {
          if (!reauthRequired) {
             // Aggiorna la password senza re-autenticazione
             await updatePassword(user, newPassword);
+
             setResetStatus('Password aggiornata con successo!');
             setNewPassword('');
             setShowReset(false);
          } else {
+            // Se è richiesta la re-autenticazione, controlla la password attuale
             if (!currentPassword) {
                setResetStatus(
                   'Inserisci la tua password attuale per re-autenticarti.'
@@ -70,7 +70,7 @@ const ResetPasswordButton: React.FC = () => {
          console.error('Errore nel reset della password:', error);
          if (error.code === 'auth/requires-recent-login') {
             setResetStatus(
-               'Re-autenticazione richiesta. Inserisci anche la tua password attuale.'
+               'Re-autenticazione richiesta. Inserisci la tua password attuale.'
             );
             setReauthRequired(true);
          } else {
@@ -107,6 +107,7 @@ const ResetPasswordButton: React.FC = () => {
                      className={styles.resetInput}
                   />
                )}
+
                <input
                   type="password"
                   placeholder="Nuova password (min 6 caratteri)"
@@ -116,6 +117,7 @@ const ResetPasswordButton: React.FC = () => {
                   }
                   className={styles.resetInput}
                />
+
                <button
                   onClick={handleResetPassword}
                   className={styles.confirmResetButton}
@@ -123,9 +125,11 @@ const ResetPasswordButton: React.FC = () => {
                >
                   Conferma
                </button>
+
                {isUpdatingPassword && <div className={styles.spinner} />}
             </div>
          )}
+
          {resetStatus && <p className={styles.statusMessage}>{resetStatus}</p>}
       </div>
    );
