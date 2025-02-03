@@ -16,6 +16,9 @@ interface AuthFormProps {
    buttonLabel: string;
 }
 
+/**
+ * Componente per la gestione del form di autenticazione (login e signup)
+ */
 const AuthForm: FC<AuthFormProps> = ({
    title,
    error,

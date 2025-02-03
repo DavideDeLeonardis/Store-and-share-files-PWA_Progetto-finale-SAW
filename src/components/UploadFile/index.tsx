@@ -8,21 +8,29 @@ import useNotification from '../../hooks/useNotification.ts';
 
 import styles from './index.module.scss';
 
+/**
+ * Componente che consente all'utente autenticato di caricare un file PDF. Il file viene salvato su Firebase Storage
+ * e le informazioni relative (nome, url, userId, path, data di creazione) vengono registrate in Firestore.
+ */
 const UploadFile: React.FC = () => {
    const { user } = useAuth();
    const { notify, notificationError } = useNotification();
+
    const [file, setFile] = useState<File | null>(null);
    const [uploadStatus, setUploadStatus] = useState<string>('');
    const [isUploading, setIsUploading] = useState<boolean>(false);
 
+   // Riferimento all'elemento input file per poterlo resettare dopo l'upload.
    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   // Salva il file selezionato nello stato quando l'utente seleziona un file.
+   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
       if (e.target.files && e.target.files.length > 0)
          setFile(e.target.files[0]);
    };
 
-   const handleUpload = async () => {
+   // Carica il file selezionato su Firebase Storage e salva le informazioni del file in Firestore.
+   const handleUpload = async (): Promise<void> => {
       if (!file) {
          setUploadStatus('Nessun file selezionato');
          return;
@@ -36,13 +44,14 @@ const UploadFile: React.FC = () => {
       setUploadStatus('Caricamento in corso...');
 
       try {
-         const filePath = `files/${user.uid}/${file.name}`;
+         // Path del file all'interno dello storage: "files/{userId}/{file.name}"
+         const filePath: string = `files/${user.uid}/${file.name}`;
          const fileRef = ref(storage, filePath);
 
+         // Upload del file su Firebase Storage, retrieve URL di download del file
+         // caricato e salviamo le informazioni del file in Firestore
          await uploadBytes(fileRef, file);
-
-         const url = await getDownloadURL(fileRef);
-
+         const url: string = await getDownloadURL(fileRef);
          await addDoc(collection(db, 'files'), {
             name: file.name,
             url,
@@ -57,11 +66,13 @@ const UploadFile: React.FC = () => {
             body: `Il file "${file.name}" è stato caricato con successo.`,
             icon: '/icon-192.png',
          });
+
+         // Reset
          setTimeout(() => setUploadStatus(''), 5000);
          setFile(null);
          if (fileInputRef.current) fileInputRef.current.value = '';
-      } catch (e) {
-         console.error('[handleUpload] Errore nell’upload:', e);
+      } catch (error) {
+         console.error('[handleUpload] Errore nell’upload:', error);
          setUploadStatus('Errore durante il caricamento del file');
       } finally {
          setIsUploading(false);
@@ -73,6 +84,7 @@ const UploadFile: React.FC = () => {
          <h3 className={styles.title}>Carica un file PDF</h3>
 
          <div className={styles.uploadRow}>
+            {/* Spinner */}
             {isUploading && <div className={styles.spinner} />}
 
             <input
@@ -92,8 +104,10 @@ const UploadFile: React.FC = () => {
             </button>
          </div>
 
+         {/* Messaggio di stato dell'upload*/}
          {uploadStatus && <p className={styles.uploadStatus}>{uploadStatus}</p>}
 
+         {/* Eventualu errori legati alle notifiche */}
          {notificationError && (
             <div style={{ marginTop: '10px' }}>{notificationError}</div>
          )}

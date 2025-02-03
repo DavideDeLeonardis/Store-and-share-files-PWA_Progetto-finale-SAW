@@ -30,32 +30,45 @@ const FileList: React.FC = () => {
    const { user } = useAuth();
    const [files, setFiles] = useState<FileData[]>([]);
 
+   /**
+    * Per sottoscriversi agli aggiornamenti dei file dell'utente in Firestore.
+    * Se l'utente non è autenticato, l'effetto non viene eseguito.
+    */
    useEffect(() => {
       if (!user) return;
 
+      // Riferimento alla collection "files" e query per filtrare per userId
       const filesRef = collection(db, 'files');
       const q = query(filesRef, where('userId', '==', user.uid));
 
+      // Sottoscrizione in tempo reale agli aggiornamenti dei file
       const unsubscribe = onSnapshot(q, (snapshot) => {
          const fileList: FileData[] = [];
-         snapshot.forEach((docSnap) => {
+         snapshot.forEach((docSnap) =>
             fileList.push({
                docId: docSnap.id,
                ...(docSnap.data() as Omit<FileData, 'docId'>),
-            });
-         });
+            })
+         );
          setFiles(fileList);
       });
 
+      // Cleanup della sottoscrizione al dismount del componente
       return () => unsubscribe();
    }, [user]);
 
-   const handleDelete = async (file: FileData) => {
+   const handleDelete = async (file: FileData): Promise<void> => {
       if (!user) return;
+
       try {
+         // Elimina il documento del file in Firestore
          await deleteDoc(doc(db, 'files', file.docId));
-         const path = file.path || `files/${user.uid}/${file.name}`;
-         const storageReference = storageRef(storage, path);
+
+         // Determina il percorso del file nello storage usando file.path se presente, altrimenti lo costruisce
+         const filePath: string = file.path || `files/${user.uid}/${file.name}`;
+         const storageReference = storageRef(storage, filePath);
+
+         // Elimina il file dallo storage
          await deleteObject(storageReference);
       } catch (error) {
          console.error('Errore nell’eliminazione del file:', error);
@@ -65,10 +78,12 @@ const FileList: React.FC = () => {
    return (
       <div className={styles.fileListContainer}>
          <h3 style={{ marginBottom: '20px' }}>I miei PDF caricati</h3>
+
          {files.length === 0 ? (
             <p>Nessun file caricato</p>
          ) : (
             <ul className={styles.fileList}>
+               {/* Elementi della lista con nome del file, link al PDF e delete button */}
                {files.map((file) => (
                   <li key={file.docId} className={styles.fileItem}>
                      <Link to={file.url} target="_blank" rel="noreferrer">
@@ -77,7 +92,7 @@ const FileList: React.FC = () => {
                         <div className={styles.pdfPreview}>
                            <Document
                               file={file.url}
-                              onLoadError={(error) =>
+                              onLoadError={(error: Error) =>
                                  console.error('Errore caricamento PDF:', error)
                               }
                            >
