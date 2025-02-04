@@ -16,6 +16,8 @@ import styles from './index.module.scss';
 
 const DeleteAllFilesButton: React.FC = () => {
    const { user } = useAuth();
+
+   // Stati per la gestione della conferma di eliminazione e del messaggio di azione
    const [filesDeleteConfirm, setFilesDeleteConfirm] = useState<boolean>(false);
    const [actionMessage, setActionMessage] = useState<string>('');
    const [isDeleting, setIsDeleting] = useState<boolean>(false);
@@ -25,6 +27,7 @@ const DeleteAllFilesButton: React.FC = () => {
     * La prima pressione imposta lo stato di conferma; la seconda esegue l'operazione.
     */
    const handleDeleteAllFiles = async (): Promise<void> => {
+      // Se l'utente non è autenticato o la conferma è già attiva, return
       if (!user) return;
       if (!filesDeleteConfirm) {
          setFilesDeleteConfirm(true);

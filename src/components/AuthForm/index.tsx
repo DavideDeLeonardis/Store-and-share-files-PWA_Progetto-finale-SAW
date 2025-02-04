@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 import styles from './index.module.scss';
 
 interface AuthFormProps {
-   title: string;
-   error: string;
+   title: string; // Titolo del form
+   error: string; 
    username?: string;
    email: string;
    password: string;
-   onUsernameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+   onUsernameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Funzione per la gestione del campo username
+   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Funzione per la gestione del campo email
+   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Funzione per la gestione del campo password
+   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void; // Funzione per la gestione del submit del form
    buttonLabel: string;
    isLoading?: boolean;
 }

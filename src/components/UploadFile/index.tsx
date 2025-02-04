@@ -62,6 +62,7 @@ const UploadFile: React.FC = () => {
 
          setUploadStatus('Upload completato con successo!');
 
+         // Notifica l'utente se il permesso è stato concesso
          if (permission === 'granted')
             notify('Upload completato', {
                body: `Il file "${file.name}" è stato caricato con successo.`,
@@ -108,7 +109,7 @@ const UploadFile: React.FC = () => {
          {/* Messaggio di stato dell'upload*/}
          {uploadStatus && <p className={styles.uploadStatus}>{uploadStatus}</p>}
 
-         {/* Eventualu errori legati alle notifiche */}
+         {/* Eventuali errori legati alle notifiche */}
          {notificationError && (
             <div style={{ marginTop: '10px' }}>{notificationError}</div>
          )}

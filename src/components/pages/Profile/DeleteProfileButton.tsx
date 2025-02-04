@@ -18,6 +18,7 @@ const DeleteProfileButton: React.FC = () => {
     * La prima pressione imposta lo stato di conferma; la seconda esegue l'eliminazione.
     */
    const handleDeleteProfile = async (): Promise<void> => {
+      // Se l'utente non è autenticato o la conferma è già attiva, return
       if (!user) return;
       if (!profileDeleteConfirm) {
          setProfileDeleteConfirm(true);
@@ -27,6 +28,7 @@ const DeleteProfileButton: React.FC = () => {
          return;
       }
 
+      // Elimina il profilo e l'utente da Firebase
       try {
          await deleteDoc(doc(db, 'users', user.uid));
          await deleteUser(user);

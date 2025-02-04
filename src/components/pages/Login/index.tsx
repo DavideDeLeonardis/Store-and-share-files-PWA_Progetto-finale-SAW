@@ -21,6 +21,7 @@ const Login: React.FC = () => {
       e.preventDefault();
       setIsLoading(true);
 
+      // Login con Firebase e navigazione alla dashboard
       try {
          await login(email, password);
          setError('');

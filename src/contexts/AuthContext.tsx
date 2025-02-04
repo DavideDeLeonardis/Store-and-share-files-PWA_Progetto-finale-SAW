@@ -23,6 +23,7 @@ import {
    AuthProviderProps,
 } from './interfaces.ts';
 
+// Creazione del contesto di autenticazione.
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**

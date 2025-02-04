@@ -24,6 +24,7 @@ const ResetPasswordButton: React.FC = () => {
     * Se la re-autenticazione è richiesta, verifica anche la password attuale.
     */
    const handleResetPassword = async (): Promise<void> => {
+      // Se l'utente non è autenticato o la password è vuota o troppo corta, return
       if (!user) return;
       if (!newPassword) {
          setResetStatus('Inserisci una nuova password.');
@@ -53,6 +54,7 @@ const ResetPasswordButton: React.FC = () => {
                return;
             }
 
+            // Controlla se la password attuale è corretta e la aggiorna
             const credential = EmailAuthProvider.credential(
                user.email!,
                currentPassword
@@ -96,6 +98,7 @@ const ResetPasswordButton: React.FC = () => {
 
          {showReset && (
             <div className={styles.resetSection}>
+               {/* {Input per la password attuale} */}
                {reauthRequired && (
                   <input
                      type="password"
@@ -108,6 +111,7 @@ const ResetPasswordButton: React.FC = () => {
                   />
                )}
 
+               {/* Input per la nuova password */}
                <input
                   type="password"
                   placeholder="Nuova password (min 6 caratteri)"

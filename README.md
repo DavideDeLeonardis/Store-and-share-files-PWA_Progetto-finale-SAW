@@ -1,26 +1,45 @@
-# Store-and-share files PWA
+# Store & Share Files PWA
 
 
-CACHE LOGIN
+Store & Share Files PWA è un'applicazione web progressiva (PWA) per l'archiviazione e la condivisione di file PDF. L'app supporta l'autenticazione (login o signup), il caricamento e la visualizzazione di documenti; disponibile pagina offline, notifiche e installazione.
+
+## URL di Destinazione
+[Accedi all'app](https://store-and-share-files-pwa.web.app)
+<br>
 
 
-https://store-and-share-files-pwa.web.app
-https://store-and-share-files-pwa.firebaseapp.com
+## Installazione
 
+### Clona il repository
+```sh
+$ git clone https://github.com/DavideDeLeonardis/Store-and-share-files-PWA_Progetto-SAW.git
+$ cd store-and-share-files-pwa
+```
 
+### Installa le dipendenze
+```sh
+$ npm install
+```
 
-useCallback
-useEffect
-createContext, AuthContext.Provider
-destructuring
-em, rem
-ServiceWorker
-Promises
+### Configura Firebase
+Crea un file `.env` nella root del progetto e aggiungi le credenziali Firebase:
+```env
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
+```
 
+### Avvia il server di sviluppo
+```sh
+$ npm start
+```
+<br>
 
+## TEST
 
-Firebase Storage:
-   progettato per memorizzare i file veri e propri
+Email: test@progettosaw.com
 
-Firestore:
-   utilizzato per memorizzare i metadati relativi ai file, come il nome del file, L'URL di download (ottenuto da Storage), L'ID dell'utente che ha caricato il file, path, ...
+Password: sawprogetto

@@ -18,6 +18,7 @@ const Signup: React.FC = () => {
    const [error, setError] = useState<string>('');
    const [isLoading, setIsLoading] = useState<boolean>(false);
 
+   // Funzione per la gestione del submit del form
    const handleSubmit = async (
       e: React.FormEvent<HTMLFormElement>
    ): Promise<void> => {

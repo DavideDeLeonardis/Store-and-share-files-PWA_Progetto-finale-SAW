@@ -18,14 +18,15 @@ import { useAuth } from '../../contexts/AuthContext.tsx';
 
 import styles from './index.module.scss';
 
+// Worker per il rendering dei PDF
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 interface FileData {
-   docId: string;
-   name: string;
-   url: string;
-   userId: string;
-   path?: string;
+   docId: string; // ID del documento in Firestore
+   name: string; // Nome del file
+   url: string; // URL del file nello storage
+   userId: string; // ID dell'utente che ha caricato il file
+   path?: string; // Percorso del file nello storage
 }
 
 const FileList: React.FC = () => {
