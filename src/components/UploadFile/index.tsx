@@ -14,7 +14,7 @@ import styles from './index.module.scss';
  */
 const UploadFile: React.FC = () => {
    const { user } = useAuth();
-   const { notify, notificationError } = useNotification();
+   const { permission, notify, notificationError } = useNotification();
 
    const [file, setFile] = useState<File | null>(null);
    const [uploadStatus, setUploadStatus] = useState<string>('');
@@ -62,10 +62,11 @@ const UploadFile: React.FC = () => {
 
          setUploadStatus('Upload completato con successo!');
 
-         notify('Upload completato', {
-            body: `Il file "${file.name}" è stato caricato con successo.`,
-            icon: '/icon-192.png',
-         });
+         if (permission === 'granted')
+            notify('Upload completato', {
+               body: `Il file "${file.name}" è stato caricato con successo.`,
+               icon: '/icon-192.png',
+            });
 
          // Reset
          setTimeout(() => setUploadStatus(''), 5000);

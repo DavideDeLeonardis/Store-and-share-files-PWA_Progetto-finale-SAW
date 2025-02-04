@@ -25,12 +25,14 @@ const useNotification = () => {
          Notification.requestPermission().then((perm) => {
             setPermission(perm);
             if (perm === 'denied')
-               setNotificationError('Le notifiche sono disabilitate.');
+               setNotificationError(
+                  'Le notifiche sono disabilitate. Abilita le notifiche nelle impostazioni del browser.'
+               );
          });
       else if (permission === 'denied')
          // Se la permission è già stata negata, mostriamo un messaggio più esplicativo
          setNotificationError(
-            'Le notifiche sono disabilitate. Abilita le notifiche dalle impostazioni del browser.'
+            'Le notifiche sono disabilitate. Abilita le notifiche nelle impostazioni del browser.'
          );
    }, [isSupported, permission]);
 
@@ -44,6 +46,7 @@ const useNotification = () => {
 
          if (permission !== 'granted') {
             console.warn('Notifiche non abilitate, permission:', permission);
+            setNotificationError('Le notifiche non sono abilitate.');
             return;
          }
 
