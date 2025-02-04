@@ -18,22 +18,29 @@ const useNotification = () => {
    const [notificationError, setNotificationError] = useState<string>('');
 
    useEffect(() => {
-      if (!isSupported) return;
+      if (!isSupported) {
+         console.warn('Notifiche non supportate su questo browser.');
+         return;
+      }
 
       // Se lo stato della permission è "default", viene richiesta la permission
       if (permission === 'default')
          Notification.requestPermission().then((perm) => {
             setPermission(perm);
-            if (perm === 'denied')
+            if (perm === 'denied') {
+               console.warn('Notifiche disabilitate dal browser.');
                setNotificationError(
                   'Le notifiche sono disabilitate. Abilita le notifiche nelle impostazioni del browser.'
                );
+            }
          });
-      else if (permission === 'denied')
+      else if (permission === 'denied') {
          // Se la permission è già stata negata, mostriamo un messaggio più esplicativo
+         console.warn('Notifiche già negate in precedenza.');
          setNotificationError(
             'Le notifiche sono disabilitate. Abilita le notifiche nelle impostazioni del browser.'
          );
+      }
    }, [isSupported, permission]);
 
    // Funzione per inviare una notifica, evitando di creare una nuova funzione ad ogni render in cui viene chiamato notify
