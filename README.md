@@ -38,6 +38,15 @@ $ npm start
 ```
 <br>
 
+## Deploy
+```sh
+$ npm run build
+```
+```sh
+$ firebase deploy
+```
+<br>
+
 ## TEST
 
 Email: test@progettosaw.com
