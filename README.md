@@ -1,28 +1,31 @@
 # Store & Share Files PWA
 
-
 Store & Share Files PWA è un'applicazione web progressiva (PWA) per l'archiviazione e la condivisione di file PDF. L'app supporta l'autenticazione (login o signup), il caricamento e la visualizzazione di documenti; disponibile pagina offline, notifiche e installazione.
 
 ## URL di Destinazione
+
 [Accedi all'app](https://store-and-share-files-pwa.web.app)
 <br>
-
 
 ## Installazione
 
 ### Clona il repository
+
 ```sh
 $ git clone https://github.com/DavideDeLeonardis/Store-and-share-files-PWA_Progetto-SAW.git
 $ cd store-and-share-files-pwa
 ```
 
 ### Installa le dipendenze
+
 ```sh
 $ npm install
 ```
 
 ### Configura Firebase
+
 Crea un file `.env` nella root del progetto e aggiungi le credenziali Firebase:
+
 ```env
 REACT_APP_FIREBASE_API_KEY=your_api_key
 REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
@@ -33,18 +36,23 @@ REACT_APP_FIREBASE_APP_ID=your_app_id
 ```
 
 ### Avvia il server di sviluppo
+
 ```sh
 $ npm start
 ```
+
 <br>
 
 ## Deploy
+
 ```sh
 $ npm run build
 ```
+
 ```sh
 $ firebase deploy
 ```
+
 <br>
 
 ## TEST

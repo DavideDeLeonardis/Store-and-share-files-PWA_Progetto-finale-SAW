@@ -9,8 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 const useNotification = () => {
    // Verifica se il browser supporta le Notification
-   const isSupported =
-      typeof window !== 'undefined' && 'Notification' in window;
+   const isSupported = 'serviceWorker' in navigator && 'Notification' in window;
 
    const [permission, setPermission] = useState<NotificationPermission>(
       isSupported ? Notification.permission : 'denied'
@@ -28,24 +27,21 @@ const useNotification = () => {
          Notification.requestPermission().then((perm) => {
             setPermission(perm);
             if (perm === 'denied') {
-               console.warn('Notifiche disabilitate dal browser.');
-               setNotificationError(
-                  'Le notifiche sono disabilitate. Abilita le notifiche nelle impostazioni del browser.'
-               );
+               setNotificationError('Le notifiche sono disabilitate.');
             }
          });
       else if (permission === 'denied') {
          // Se la permission è già stata negata, mostriamo un messaggio più esplicativo
          console.warn('Notifiche già negate in precedenza.');
          setNotificationError(
-            'Le notifiche sono disabilitate. Abilita le notifiche nelle impostazioni del browser.'
+            'Le notifiche sono disabilitate nelle impostazioni del browser.'
          );
       }
    }, [isSupported, permission]);
 
    // Funzione per inviare una notifica, evitando di creare una nuova funzione ad ogni render in cui viene chiamato notify
    const notify = useCallback(
-      (title: string, options?: NotificationOptions) => {
+      async (title: string, options?: NotificationOptions) => {
          if (!isSupported) {
             console.error('Il browser non supporta le notifiche');
             return;
@@ -57,7 +53,9 @@ const useNotification = () => {
             return;
          }
 
-         new Notification(title, options);
+         // Usa il Service Worker per inviare le notifiche
+         const registration = await navigator.serviceWorker.ready;
+         registration.showNotification(title, options);
       },
       [isSupported, permission]
    );

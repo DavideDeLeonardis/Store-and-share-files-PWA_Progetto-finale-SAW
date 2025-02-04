@@ -1,8 +1,14 @@
+@import '../../assets/scss/variables';
+
 $list-gap: 20px;
 $file-width: 300px;
 
 .fileListContainer {
    margin-top: 1rem;
+
+   h3 {
+      color: $primary-color;
+   }
 
    .fileList {
       display: flex;

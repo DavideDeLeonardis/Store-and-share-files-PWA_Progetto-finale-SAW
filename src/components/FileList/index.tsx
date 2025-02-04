@@ -80,7 +80,7 @@ const FileList: React.FC = () => {
 
    return (
       <div className={styles.fileListContainer}>
-         <h3 style={{ marginBottom: '20px' }}>I miei PDF caricati</h3>
+         <h3 style={{ marginBottom: '20px' }}>I miei file caricati</h3>
 
          {files.length === 0 ? (
             <p>Nessun file caricato</p>

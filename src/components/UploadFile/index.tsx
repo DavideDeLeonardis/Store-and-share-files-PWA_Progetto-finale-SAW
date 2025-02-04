@@ -83,7 +83,7 @@ const UploadFile: React.FC = () => {
 
    return (
       <div className={styles.uploadContainer}>
-         <h3 className={styles.title}>Carica un file PDF</h3>
+         <h3 className={styles.title}>Carica un file</h3>
 
          <div className={styles.uploadRow}>
             {/* Spinner */}
