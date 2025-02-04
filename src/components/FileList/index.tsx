@@ -17,10 +17,8 @@ import { db, storage } from '../../firebase/firebaseConfig.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
 
 import styles from './index.module.scss';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 interface FileData {
    docId: string;
