@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { AuthProvider } from './contexts/AuthContext.tsx';
 import PrivateRoute from './components/PrivateRoute/index.tsx';
-
 import LandingPage from './components/pages/LandingPage/index.tsx';
 import Login from './components/pages/Login/index.tsx';
 import Signup from './components/pages/Signup/index.tsx';
