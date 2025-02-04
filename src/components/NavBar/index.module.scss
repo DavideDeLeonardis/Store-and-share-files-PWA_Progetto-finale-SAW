@@ -10,6 +10,11 @@
    border-bottom: 1px solid #eee;
    width: 100%;
 
+   @media screen and (max-width: 768px) {
+      flex-direction: column;
+      gap: 20px;
+   }
+
    .navbarLeft h2 {
       font-size: 1.8rem;
       color: $primary-color;

@@ -1,8 +1,6 @@
 # Store-and-share files PWA
 
 
-REACT-PDF in PRODUCTION
-Da MOBILE ESPLODE TUTTO
 CACHE LOGIN
 
 
