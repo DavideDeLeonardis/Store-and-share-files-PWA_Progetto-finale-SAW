@@ -2,7 +2,8 @@
    {
       "origin": [
          "http://localhost:3000",
-         "https://store-and-share-files-pwa.web.app"
+         "https://store-and-share-files-pwa.web.app",
+         "https://store-and-share-files-pwa.firebaseapp.com"
       ],
       "method": [
          "GET",
