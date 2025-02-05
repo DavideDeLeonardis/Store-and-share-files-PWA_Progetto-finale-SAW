@@ -121,7 +121,7 @@ const ResetPasswordButton: React.FC = () => {
                   className={styles.resetInput}
                />
 
-               <Button 
+               <Button
                   onClick={handleResetPassword}
                   className={styles.confirmResetButton}
                   disabled={isUpdatingPassword}

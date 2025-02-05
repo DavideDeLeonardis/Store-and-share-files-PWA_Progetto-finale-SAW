@@ -20,8 +20,8 @@ const Logout: React.FC = () => {
       <Button
          className={styles.logoutButton}
          onClick={handleLogout}
-         children={'Logout'}
          variant="danger"
+         children="Logout"
       />
    );
 };

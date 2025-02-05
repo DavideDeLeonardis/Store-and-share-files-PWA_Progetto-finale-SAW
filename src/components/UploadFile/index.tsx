@@ -4,10 +4,10 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 import { storage, db } from '../../firebase/firebaseConfig.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
+import Button from '../layout/Button/index.tsx';
 import useNotification from '../../hooks/useNotification.ts';
 
 import styles from './index.module.scss';
-import Button from '../layout/Button/index.tsx';
 
 /**
  * Componente che consente all'utente autenticato di caricare un file PDF. Il file viene salvato su Firebase Storage
@@ -97,7 +97,6 @@ const UploadFile: React.FC = () => {
 
             <input
                type="file"
-               // accept="application/pdf"
                // ! ACCETTATi TUTTI I FILE, anche file .exe, ...
                onChange={handleFileChange}
                ref={fileInputRef}

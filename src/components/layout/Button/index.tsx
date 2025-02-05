@@ -1,4 +1,4 @@
-import React, {forwardRef} from 'react';
+import React, { forwardRef } from 'react';
 import styles from './index.module.scss';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,30 +8,36 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
    variant?: 'primary' | 'danger';
    disabled?: boolean;
    className?: string;
-   ref: React.RefObject<HTMLButtonElement>;
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>({
-   children,
-   onClick,
-   type = 'button',
-   variant = 'primary',
-   disabled = false,
-   className = '',
-   ref
-}) => {
-   return (
-      <button
-         type={type}
-         onClick={onClick}
-         disabled={disabled}
-         // Varianti: primary color, danger color
-         className={`${styles.button} ${styles[variant]} ${className}`}
-         ref={ref}
-      >
-         {children}
-      </button>
-   );
-};
+/**
+ * Button component con supporto a ref forwarding.
+ */
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+   (
+      {
+         children,
+         onClick,
+         type = 'button',
+         variant = 'primary',
+         disabled = false,
+         className = '',
+      },
+      ref
+   ) => {
+      return (
+         <button
+            type={type}
+            onClick={onClick}
+            disabled={disabled}
+            // Varianti: primary color, danger color
+            className={`${styles.button} ${styles[variant]} ${className}`}
+            ref={ref}
+         >
+            {children}
+         </button>
+      );
+   }
+);
 
 export default Button;
