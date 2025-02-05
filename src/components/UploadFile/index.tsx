@@ -57,6 +57,7 @@ const UploadFile: React.FC = () => {
             url,
             userId: user.uid,
             path: filePath,
+            type: file.type,
             createdAt: Timestamp.now(),
          });
 
@@ -91,7 +92,8 @@ const UploadFile: React.FC = () => {
 
             <input
                type="file"
-               accept="application/pdf"
+               // accept="application/pdf"
+               // ! ACCETTATi TUTTI I FILE, anche file .exe, ...
                onChange={handleFileChange}
                ref={fileInputRef}
                className={styles.fileInput}

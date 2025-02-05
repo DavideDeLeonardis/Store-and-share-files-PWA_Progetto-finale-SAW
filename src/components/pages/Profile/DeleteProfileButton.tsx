@@ -36,7 +36,7 @@ const DeleteProfileButton: React.FC = () => {
       } catch (error) {
          console.error("Errore nell'eliminazione del profilo:", error);
          setActionMessage(
-            "Errore nell'eliminazione del profilo. Potrebbe essere necessaria una re-autenticazione."
+            "Errore nell'eliminazione del profilo. Necessaria una re-autenticazione."
          );
       }
    };

@@ -23,15 +23,19 @@ pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 interface FileData {
    docId: string; // ID del documento in Firestore
-   name: string; // Nome del file
+   name: string;
    url: string; // URL del file nello storage
-   userId: string; // ID dell'utente che ha caricato il file
+   userId: string;
    path?: string; // Percorso del file nello storage
 }
 
 const FileList: React.FC = () => {
    const { user } = useAuth();
    const [files, setFiles] = useState<FileData[]>([]);
+   // State per tenere traccia degli errori di caricamento dell'anteprima del PDF
+   const [errorPreview, setErrorPreview] = useState<{ [key: string]: boolean }>(
+      {}
+   );
 
    /**
     * Per sottoscriversi agli aggiornamenti dei file dell'utente in Firestore.
@@ -86,30 +90,52 @@ const FileList: React.FC = () => {
             <p>Nessun file caricato</p>
          ) : (
             <ul className={styles.fileList}>
-               {/* Elementi della lista con nome del file, link al PDF e delete button */}
+               {/* Elementi della lista files */}
                {files.map((file) => (
                   <li key={file.docId} className={styles.fileItem}>
-                     <Link to={file.url} target="_blank" rel="noreferrer">
+                     <div className={styles.fileContent}>
                         <strong className={styles.fileName}>{file.name}</strong>
 
                         <div className={styles.pdfPreview}>
-                           <Document
-                              file={file.url}
-                              onLoadError={(error: Error) =>
-                                 console.error('Errore caricamento PDF:', error)
-                              }
-                           >
-                              <Page pageNumber={1} width={300} />
-                           </Document>
+                           {errorPreview[file.docId] ? (
+                              <p className={styles.errorMessage}>
+                                 Anteprima non disponibile
+                              </p>
+                           ) : (
+                              <Document
+                                 file={file.url}
+                                 onLoadError={() =>
+                                    setErrorPreview((prev) => ({
+                                       ...prev,
+                                       [file.docId]: true,
+                                    }))
+                                 }
+                              >
+                                 <Page pageNumber={1} width={300} />
+                              </Document>
+                           )}
                         </div>
-                     </Link>
 
-                     <button
-                        className={styles.deleteButton}
-                        onClick={() => handleDelete(file)}
-                     >
-                        Elimina
-                     </button>
+                        {/* Buttons view e delete file */}
+                        <div className={styles.buttonGroup}>
+                           <button className={styles.viewButton}>
+                              <Link
+                                 to={file.url}
+                                 target="_blank"
+                                 rel="noreferrer"
+                              >
+                                 Visualizza
+                              </Link>
+                           </button>
+
+                           <button
+                              className={styles.deleteButton}
+                              onClick={() => handleDelete(file)}
+                           >
+                              Elimina
+                           </button>
+                        </div>
+                     </div>
                   </li>
                ))}
             </ul>
