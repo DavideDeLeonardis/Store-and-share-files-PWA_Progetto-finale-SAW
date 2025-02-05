@@ -17,7 +17,8 @@ const Dashboard: React.FC = () => {
          {user && (
             <div className={styles.userInfo}>
                Ciao <strong>{profile ? profile.username : 'Utente'}</strong>,
-               carica un file per iniziare! (verranno visualizzati solo i file PDF)
+               carica un file per iniziare! (l'anteprima è disponibile solo per
+               i file PDF)
             </div>
          )}
 
