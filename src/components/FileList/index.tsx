@@ -10,6 +10,7 @@ import {
    onSnapshot,
    doc,
    deleteDoc,
+   orderBy,
 } from 'firebase/firestore';
 import { ref as storageRef, deleteObject } from 'firebase/storage';
 
@@ -28,15 +29,14 @@ interface FileData {
    url: string; // URL del file nello storage
    userId: string;
    path?: string; // Percorso del file nello storage
+   createdAt?: any; // Timestamp Firestore
 }
 
 const FileList: React.FC = () => {
    const { user } = useAuth();
+   // State per db files e errori di caricamento dell'anteprima del PDF
    const [files, setFiles] = useState<FileData[]>([]);
-   // State per tenere traccia degli errori di caricamento dell'anteprima del PDF
-   const [errorPreview, setErrorPreview] = useState<{ [key: string]: boolean }>(
-      {}
-   );
+   const [errPreview, setErrPreview] = useState<{ [key: string]: boolean }>({});
 
    /**
     * Per sottoscriversi agli aggiornamenti dei file dell'utente in Firestore.
@@ -45,23 +45,28 @@ const FileList: React.FC = () => {
    useEffect(() => {
       if (!user) return;
 
-      // Riferimento alla collection "files" e query per filtrare per userId
-      const filesRef = collection(db, 'files');
-      const q = query(filesRef, where('userId', '==', user.uid));
+      // Query per ottenere i file, filtrati per userId e ordinati dal più recente
+      const db_query = query(
+         collection(db, 'files'),
+         where('userId', '==', user.uid),
+         orderBy('createdAt', 'desc')
+      );
 
       // Sottoscrizione in tempo reale agli aggiornamenti dei file
-      const unsubscribe = onSnapshot(q, (snapshot) => {
+      const unsubscribe = onSnapshot(db_query, (snapshot) => {
          const fileList: FileData[] = [];
+
          snapshot.forEach((docSnap) =>
             fileList.push({
                docId: docSnap.id,
                ...(docSnap.data() as Omit<FileData, 'docId'>),
             })
          );
+
          setFiles(fileList);
       });
 
-      // Cleanup della sottoscrizione al dismount del componente
+      // Unsubscribe al dismount del componente, o cambio user
       return () => unsubscribe();
    }, [user]);
 
@@ -72,7 +77,7 @@ const FileList: React.FC = () => {
          // Elimina il documento del file in Firestore
          await deleteDoc(doc(db, 'files', file.docId));
 
-         // Determina il percorso del file nello storage usando file.path se presente, altrimenti lo costruisce
+         // Determina il path del file nello storage usando file.path se presente, altrimenti lo costruisce
          const filePath: string = file.path || `files/${user.uid}/${file.name}`;
          const storageReference = storageRef(storage, filePath);
 
@@ -98,7 +103,7 @@ const FileList: React.FC = () => {
                         <strong className={styles.fileName}>{file.name}</strong>
 
                         <div className={styles.pdfPreview}>
-                           {errorPreview[file.docId] ? (
+                           {errPreview[file.docId] ? (
                               <p className={styles.errorMessage}>
                                  Anteprima non disponibile
                               </p>
@@ -106,7 +111,7 @@ const FileList: React.FC = () => {
                               <Document
                                  file={file.url}
                                  onLoadError={() =>
-                                    setErrorPreview((prev) => ({
+                                    setErrPreview((prev) => ({
                                        ...prev,
                                        [file.docId]: true,
                                     }))
@@ -119,11 +124,7 @@ const FileList: React.FC = () => {
 
                         {/* Buttons view e delete file */}
                         <div className={styles.buttonGroup}>
-                           <Link
-                              to={file.url}
-                              target="_blank"
-                              rel="noreferrer"
-                           >
+                           <Link to={file.url} target="_blank" rel="noreferrer">
                               <Button
                                  className={styles.viewButton}
                                  children={'Visualizza'}
