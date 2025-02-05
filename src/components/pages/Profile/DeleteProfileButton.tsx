@@ -4,6 +4,7 @@ import { deleteUser } from 'firebase/auth';
 
 import { useAuth } from '../../../contexts/AuthContext.tsx';
 import { db } from '../../../firebase/firebaseConfig.ts';
+import Button from '../../layout/Button/index.tsx';
 
 import styles from './index.module.scss';
 
@@ -43,9 +44,11 @@ const DeleteProfileButton: React.FC = () => {
 
    return (
       <>
-         <button onClick={handleDeleteProfile} className={styles.deleteButton}>
-            Elimina Profilo
-         </button>
+         <Button
+            onClick={handleDeleteProfile}
+            className={styles.deleteButton}
+            children="Elimina Profilo"
+         />
 
          {actionMessage && (
             <p className={styles.actionMessage}>{actionMessage}</p>

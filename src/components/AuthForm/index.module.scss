@@ -49,24 +49,7 @@
    }
 
    .submitButton {
-      display: block;
       width: 100%;
-      margin-top: 1rem;
-      background-color: $primary-color;
-      color: #fff;
-      border: none;
-      padding: 0.8rem 1.2rem;
-      font-size: 1rem;
-      border-radius: $border-radius;
-      cursor: pointer;
-      transition: background-color $transition-speed;
-
-      &:hover {
-         background-color: color.adjust(
-            $primary-color,
-            $lightness: -$link-hover-darken
-         );
-      }
    }
 
    .homeLink {

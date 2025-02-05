@@ -52,14 +52,8 @@
       }
 
       .uploadButton {
-         background-color: $primary-color;
-         color: #fff;
-         border: none;
          padding: 0.6rem 1rem;
-         border-radius: 4px;
-         cursor: pointer;
          font-size: 0.9rem;
-         transition: background-color 0.2s ease;
 
          &:hover:not(:disabled) {
             background-color: darken($primary-color, 5%);

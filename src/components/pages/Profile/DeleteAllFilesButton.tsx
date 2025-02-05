@@ -11,6 +11,7 @@ import { ref as storageRef, deleteObject } from 'firebase/storage';
 
 import { useAuth } from '../../../contexts/AuthContext.tsx';
 import { db, storage } from '../../../firebase/firebaseConfig.ts';
+import Button from '../../layout/Button/index.tsx';
 
 import styles from './index.module.scss';
 
@@ -95,13 +96,12 @@ const DeleteAllFilesButton: React.FC = () => {
 
    return (
       <>
-         <button
+         <Button
             onClick={handleDeleteAllFiles}
             className={styles.deleteButton}
             disabled={isDeleting}
-         >
-            Elimina Tutti i File
-         </button>
+            children="Elimina Tutti i File"
+         />
 
          {isDeleting && <div className={styles.spinner} />}
 

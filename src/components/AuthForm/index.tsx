@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 
+import Button from '../layout/Button/index.tsx';
+
 import styles from './index.module.scss';
 
 interface AuthFormProps {
    title: string; // Titolo del form
-   error: string; 
+   error: string;
    username?: string;
    email: string;
    password: string;
@@ -74,13 +76,12 @@ const AuthForm: FC<AuthFormProps> = ({
                />
             </div>
 
-            <button
+            <Button
                type="submit"
                className={styles.submitButton}
                disabled={isLoading}
-            >
-               {buttonLabel}
-            </button>
+               children={buttonLabel}
+            />
          </form>
 
          {/* Spinner se il form è in caricamento */}

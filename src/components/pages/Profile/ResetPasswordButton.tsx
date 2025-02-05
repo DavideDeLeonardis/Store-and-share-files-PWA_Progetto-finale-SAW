@@ -6,6 +6,7 @@ import {
 } from 'firebase/auth';
 
 import { useAuth } from '../../../contexts/AuthContext.tsx';
+import Button from '../../layout/Button/index.tsx';
 
 import styles from './index.module.scss';
 
@@ -85,16 +86,14 @@ const ResetPasswordButton: React.FC = () => {
 
    return (
       <div className={styles.resetWrapper}>
-         <button
+         <Button
             onClick={() => {
                setShowReset(!showReset);
                setResetStatus('');
                setReauthRequired(false);
             }}
-            className={styles.resetButton}
-         >
-            Reimposta Password
-         </button>
+            children="Reimposta Password"
+         />
 
          {showReset && (
             <div className={styles.resetSection}>
@@ -122,13 +121,12 @@ const ResetPasswordButton: React.FC = () => {
                   className={styles.resetInput}
                />
 
-               <button
+               <Button 
                   onClick={handleResetPassword}
                   className={styles.confirmResetButton}
                   disabled={isUpdatingPassword}
-               >
-                  Conferma
-               </button>
+                  children="Conferma"
+               />
 
                {isUpdatingPassword && <div className={styles.spinner} />}
             </div>

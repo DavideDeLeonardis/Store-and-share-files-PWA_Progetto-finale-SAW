@@ -15,6 +15,7 @@ import { ref as storageRef, deleteObject } from 'firebase/storage';
 
 import { db, storage } from '../../firebase/firebaseConfig.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
+import Button from '../layout/Button/index.tsx';
 
 import styles from './index.module.scss';
 
@@ -118,22 +119,23 @@ const FileList: React.FC = () => {
 
                         {/* Buttons view e delete file */}
                         <div className={styles.buttonGroup}>
-                           <button className={styles.viewButton}>
-                              <Link
-                                 to={file.url}
-                                 target="_blank"
-                                 rel="noreferrer"
-                              >
-                                 Visualizza
-                              </Link>
-                           </button>
+                           <Link
+                              to={file.url}
+                              target="_blank"
+                              rel="noreferrer"
+                           >
+                              <Button
+                                 className={styles.viewButton}
+                                 children={'Visualizza'}
+                              />
+                           </Link>
 
-                           <button
+                           <Button
                               className={styles.deleteButton}
                               onClick={() => handleDelete(file)}
-                           >
-                              Elimina
-                           </button>
+                              children={'Elimina'}
+                              variant="danger"
+                           />
                         </div>
                      </div>
                   </li>

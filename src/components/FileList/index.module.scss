@@ -64,43 +64,21 @@ $file-width: 300px;
                justify-content: space-between;
                gap: 5%;
                margin-top: 20px;
-            }
-
-            .viewButton {
-               background-color: $primary-color;
-               color: #fff;
-               text-align: center;
-               padding: 0.5rem 1rem;
-               border-radius: 4px;
-               text-decoration: none;
-               font-size: 0.9rem;
-               transition: background-color 0.2s ease;
-               flex: 1;
-               border: none;
-               cursor: pointer;
 
                a {
-                  color: white;
-                  text-decoration: none;
+                  flex: 1;
+
+                  .viewButton {
+                     padding: 0.5rem 1rem;
+                     width: 100%;
+                     font-size: 0.9rem;
+                  }
                }
 
-               &:hover {
-                  background-color: darken($primary-color, 5%);
-               }
-            }
-
-            .deleteButton {
-               background-color: #b51818;
-               color: #fff;
-               border: none;
-               padding: 0.5rem 1rem;
-               border-radius: 4px;
-               cursor: pointer;
-               transition: background-color 0.2s ease;
-               flex: 1;
-
-               &:hover {
-                  background-color: darken(#b51818, 5%);
+               .deleteButton {
+                  padding: 0.5rem 1rem;
+                  flex: 0.8;
+                  font-size: 0.9rem;
                }
             }
          }

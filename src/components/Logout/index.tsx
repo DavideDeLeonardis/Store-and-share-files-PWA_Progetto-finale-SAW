@@ -1,6 +1,8 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext.tsx';
 
+import Button from '../layout/Button/index.tsx';
+
 import styles from './index.module.scss';
 
 const Logout: React.FC = () => {
@@ -15,9 +17,12 @@ const Logout: React.FC = () => {
    };
 
    return (
-      <button onClick={handleLogout} className={styles.logoutButton}>
-         Logout
-      </button>
+      <Button
+         className={styles.logoutButton}
+         onClick={handleLogout}
+         children={'Logout'}
+         variant="danger"
+      />
    );
 };
 
