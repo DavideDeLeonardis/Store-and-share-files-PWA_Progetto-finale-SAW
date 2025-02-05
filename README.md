@@ -59,4 +59,4 @@ $ firebase deploy
 
 Email: test@progettosaw.com
 
-Password: sawprogetto
+Password: progettosaw
