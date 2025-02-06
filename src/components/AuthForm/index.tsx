@@ -1,30 +1,16 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AuthFormProps } from './interfaces.ts';
 import Button from '../layout/Button/index.tsx';
 
 import styles from './index.module.scss';
-
-interface AuthFormProps {
-   title: string; // Titolo del form
-   error: string;
-   username?: string;
-   email: string;
-   password: string;
-   onUsernameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Funzione per la gestione del campo username
-   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Funzione per la gestione del campo email
-   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Funzione per la gestione del campo password
-   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void; // Funzione per la gestione del submit del form
-   buttonLabel: string;
-   isLoading?: boolean;
-}
 
 /**
  * Componente per la gestione del form di autenticazione (login e signup)
  */
 const AuthForm: FC<AuthFormProps> = ({
    title,
-   error,
    username,
    email,
    password,
@@ -34,6 +20,7 @@ const AuthForm: FC<AuthFormProps> = ({
    onSubmit,
    buttonLabel,
    isLoading,
+   error,
 }) => {
    return (
       <div className={styles.formContainer}>
