@@ -1,102 +1,23 @@
 @import '../../assets/scss/variables';
 
-$list-gap: 20px;
-$file-width: 300px;
-
 .fileListContainer {
    margin-top: 1rem;
 
    h3 {
       color: $primary-color;
+      margin-bottom: 20px;
    }
 
    .fileList {
       display: flex;
       flex-wrap: wrap;
       gap: $list-gap;
-
-      .fileItem {
-         width: calc(100% / 3 - $list-gap);
-         max-width: 400px;
-         margin-bottom: 2rem;
-         border: 1px solid #ccc;
-         padding: 10px;
-         border-radius: 6px;
-         background-color: #fff;
-         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-         overflow: hidden;
-         display: flex;
-         flex-direction: column;
-         justify-content: space-between;
-
-         .fileContent {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            overflow-x: hidden;
-
-            .fileName {
-               display: block;
-               text-align: center;
-               font-size: 1rem;
-               margin-bottom: 10px;
-               white-space: nowrap;
-               overflow: hidden;
-               text-overflow: ellipsis;
-               max-width: 100%;
-            }
-
-            .pdfPreview {
-               flex-grow: 1;
-               display: flex;
-               align-items: center;
-               justify-content: center;
-               margin-bottom: 10px;
-               max-height: 300px;
-               overflow-y: auto;
-               border: 1px solid #ccc;
-
-               .errorMessage {
-                  color: red;
-                  text-align: center;
-                  margin: 10px;
-               }
-            }
-
-            .buttonGroup {
-               display: flex;
-               justify-content: space-between;
-               gap: 5%;
-               margin-top: 20px;
-
-               a {
-                  flex: 1;
-
-                  .viewButton {
-                     padding: 0.5rem 1rem;
-                     width: 100%;
-                     font-size: 0.9rem;
-                  }
-               }
-
-               .deleteButton {
-                  padding: 0.5rem 1rem;
-                  flex: 0.8;
-                  font-size: 0.9rem;
-               }
-            }
-         }
-      }
    }
 
    @media (max-width: 768px) {
       .fileList {
          flex-direction: column;
          gap: 20px;
-
-         .fileItem {
-            width: 100%;
-         }
       }
    }
 }

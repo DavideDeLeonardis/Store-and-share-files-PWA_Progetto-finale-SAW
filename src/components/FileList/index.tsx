@@ -1,8 +1,4 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
-import { Link } from 'react-router-dom';
 import {
    collection,
    query,
@@ -14,29 +10,16 @@ import {
 } from 'firebase/firestore';
 import { ref as storageRef, deleteObject } from 'firebase/storage';
 
-import { db, storage } from '../../firebase/firebaseConfig.ts';
+import { FileData } from './interfaces.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
-import Button from '../layout/Button/index.tsx';
+import { db, storage } from '../../firebase/firebaseConfig.ts';
+import FileElement from './FileElement/index.tsx';
 
 import styles from './index.module.scss';
 
-// Worker per il rendering dei PDF
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
-
-interface FileData {
-   docId: string; // ID del documento in Firestore
-   name: string;
-   url: string; // URL del file nello storage
-   userId: string;
-   path?: string; // Percorso del file nello storage
-   createdAt?: any; // Timestamp Firestore
-}
-
 const FileList: React.FC = () => {
    const { user } = useAuth();
-   // State per db files e errori di caricamento dell'anteprima del PDF
    const [files, setFiles] = useState<FileData[]>([]);
-   const [errPreview, setErrPreview] = useState<{ [key: string]: boolean }>({});
 
    /**
     * Per sottoscriversi agli aggiornamenti dei file dell'utente in Firestore.
@@ -88,60 +71,18 @@ const FileList: React.FC = () => {
       }
    };
 
+   const file_list = files.map((file) => (
+      <FileElement key={file.docId} file={file} onDelete={handleDelete} />
+   ));
+
    return (
       <div className={styles.fileListContainer}>
-         <h3 style={{ marginBottom: '20px' }}>I miei file caricati</h3>
+         <h3>I miei file caricati</h3>
 
          {files.length === 0 ? (
             <p>Nessun file caricato</p>
          ) : (
-            <ul className={styles.fileList}>
-               {/* Elementi della lista files */}
-               {files.map((file) => (
-                  <li key={file.docId} className={styles.fileItem}>
-                     <div className={styles.fileContent}>
-                        <strong className={styles.fileName}>{file.name}</strong>
-
-                        <div className={styles.pdfPreview}>
-                           {errPreview[file.docId] ? (
-                              <p className={styles.errorMessage}>
-                                 Anteprima non disponibile
-                              </p>
-                           ) : (
-                              <Document
-                                 file={file.url}
-                                 onLoadError={() =>
-                                    setErrPreview((prev) => ({
-                                       ...prev,
-                                       [file.docId]: true,
-                                    }))
-                                 }
-                              >
-                                 <Page pageNumber={1} width={300} />
-                              </Document>
-                           )}
-                        </div>
-
-                        {/* Buttons view e delete file */}
-                        <div className={styles.buttonGroup}>
-                           <Link to={file.url} target="_blank" rel="noreferrer">
-                              <Button
-                                 className={styles.viewButton}
-                                 children={'Visualizza'}
-                              />
-                           </Link>
-
-                           <Button
-                              className={styles.deleteButton}
-                              onClick={() => handleDelete(file)}
-                              children={'Elimina'}
-                              variant="danger"
-                           />
-                        </div>
-                     </div>
-                  </li>
-               ))}
-            </ul>
+            <ul className={styles.fileList}>{file_list}</ul>
          )}
       </div>
    );
