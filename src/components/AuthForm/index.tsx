@@ -79,6 +79,7 @@ const AuthForm: FC<AuthFormProps> = ({
                />
             </div>
 
+            {/* Submit form */}
             <Button
                type="submit"
                className={styles.submitButton}

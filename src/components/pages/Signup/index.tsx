@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
 
 import { useAuth } from '../../../contexts/AuthContext.tsx';
-import AuthForm from '../../AuthForm/index.tsx';
 import { db } from '../../../firebase/firebaseConfig.ts';
+import AuthForm from '../../AuthForm/index.tsx';
 import useFirebaseErrorMessage from '../../../hooks/useFirebaseErrorMessage.ts';
 
 const Signup: React.FC = () => {
