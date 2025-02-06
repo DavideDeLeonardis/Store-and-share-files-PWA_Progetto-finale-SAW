@@ -8,7 +8,11 @@ import {
    deleteDoc,
    orderBy,
 } from 'firebase/firestore';
-import { ref as storageRef, deleteObject } from 'firebase/storage';
+import {
+   ref as storageRef,
+   deleteObject,
+   getDownloadURL,
+} from 'firebase/storage';
 
 import { FileData } from './interfaces.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
@@ -36,15 +40,34 @@ const FileList: React.FC = () => {
       );
 
       // Sottoscrizione in tempo reale agli aggiornamenti dei file
-      const unsubscribe = onSnapshot(db_query, (snapshot) => {
+      const unsubscribe = onSnapshot(db_query, async (snapshot) => {
          const fileList: FileData[] = [];
 
-         snapshot.forEach((docSnap) =>
-            fileList.push({
+         // Verifica ogni file se esiste nello Storage prima di aggiungerlo alla lista
+         for (const docSnap of snapshot.docs) {
+            const fileData = {
                docId: docSnap.id,
                ...(docSnap.data() as Omit<FileData, 'docId'>),
-            })
-         );
+            };
+
+            // Costruisci il riferimento al file nello Storage
+            const filePath: string =
+               fileData.path || `files/${user.uid}/${fileData.name}`;
+            const storageReference = storageRef(storage, filePath);
+
+            try {
+               // Controlla se il file esiste nello Storage
+               await getDownloadURL(storageReference);
+               fileList.push(fileData); // Se esiste, lo aggiunge alla lista
+            } catch (error) {
+               console.warn(
+                  'File non trovato nello Storage, eliminazione da Firestore:',
+                  filePath
+               );
+               // Elimina il riferimento da Firestore
+               await deleteDoc(doc(db, 'files', fileData.docId));
+            }
+         }
 
          setFiles(fileList);
       });
@@ -57,15 +80,28 @@ const FileList: React.FC = () => {
       if (!user) return;
 
       try {
-         // Elimina il documento del file in Firestore
-         await deleteDoc(doc(db, 'files', file.docId));
-
-         // Determina il path del file nello storage usando file.path se presente, altrimenti lo costruisce
+         // Percorso del file nello storage
          const filePath: string = file.path || `files/${user.uid}/${file.name}`;
          const storageReference = storageRef(storage, filePath);
 
-         // Elimina il file dallo storage
-         await deleteObject(storageReference);
+         let fileExists = true;
+         try {
+            await getDownloadURL(storageReference);
+         } catch (error) {
+            fileExists = false;
+            console.warn('Il file non esiste più nello Storage:', filePath);
+         }
+
+         // Se il file esiste, lo elimina dallo Storage
+         if (fileExists)
+            try {
+               await deleteObject(storageReference);
+            } catch (err) {
+               console.error('Errore nell’eliminazione dallo Storage:', err);
+            }
+
+         // Elimina il riferimento al file da Firestore
+         await deleteDoc(doc(db, 'files', file.docId));
       } catch (error) {
          console.error('Errore nell’eliminazione del file:', error);
       }
