@@ -14,6 +14,7 @@ const Dashboard: React.FC = () => {
       <div className={styles.dashboardContainer}>
          <NavBar currentPage="dashboard" />
 
+         {/* Intro */}
          {user && (
             <div className={styles.userInfo}>
                Ciao <strong>{profile ? profile.username : 'Utente'}</strong>,

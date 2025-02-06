@@ -13,15 +13,18 @@ import styles from './index.module.scss';
 const ResetPasswordButton: React.FC = () => {
    const { user } = useAuth();
 
+   // State per mostrare l'input per il reset della password
    const [showReset, setShowReset] = useState<boolean>(false);
+
    const [newPassword, setNewPassword] = useState<string>('');
    const [currentPassword, setCurrentPassword] = useState<string>('');
    const [reauthRequired, setReauthRequired] = useState<boolean>(false);
+
+   // State per mostrare lo stato del reset della password
    const [resetStatus, setResetStatus] = useState<string>('');
    const [isUpdatingPassword, setIsUpdatingPassword] = useState<boolean>(false);
 
    /**
-    * Gestisce il reset della password.
     * Se la re-autenticazione è richiesta, verifica anche la password attuale.
     */
    const handleResetPassword = async (): Promise<void> => {
@@ -130,10 +133,12 @@ const ResetPasswordButton: React.FC = () => {
                   Conferma
                </Button>
 
+               {/* Spinner */}
                {isUpdatingPassword && <div className={styles.spinner} />}
             </div>
          )}
 
+         {/* Status */}
          {resetStatus && <p className={styles.statusMessage}>{resetStatus}</p>}
       </div>
    );

@@ -50,7 +50,7 @@ const DeleteAllFilesButton: React.FC = () => {
          const errors: string[] = [];
 
          // Esegue l'eliminazione per ciascun file
-         const deletePromises = querySnapshot.docs.map(async (docSnap) => {
+         const deleteFilesPromises = querySnapshot.docs.map(async (docSnap) => {
             try {
                const fileData = docSnap.data();
                const filePath: string =
@@ -77,7 +77,7 @@ const DeleteAllFilesButton: React.FC = () => {
          });
 
          // Attende il completamento di tutte le eliminazioni.
-         await Promise.all(deletePromises);
+         await Promise.all(deleteFilesPromises);
 
          if (errors.length > 0)
             setActionMessage(

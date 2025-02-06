@@ -7,7 +7,7 @@ import useFirebaseErrorMessage from '../../../hooks/useFirebaseErrorMessage.ts';
 
 const Login: React.FC = () => {
    const { login } = useAuth();
-   const navigate = useNavigate();
+   const navigate = useNavigate(); // Hook di React Router
    const { getErrorMessage } = useFirebaseErrorMessage();
 
    const [email, setEmail] = useState<string>('');

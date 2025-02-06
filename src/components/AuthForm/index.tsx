@@ -42,6 +42,7 @@ const AuthForm: FC<AuthFormProps> = ({
          {error && <p className={styles.errorMessage}>{error}</p>}
 
          <form onSubmit={onSubmit}>
+            {/* Nome utente, se in form signup */}
             {onUsernameChange && (
                <div className={styles.formField}>
                   <label>Nome utente</label>
@@ -56,6 +57,7 @@ const AuthForm: FC<AuthFormProps> = ({
                </div>
             )}
 
+            {/* Email */}
             <div className={styles.formField}>
                <label>Email</label>
                <input
@@ -66,6 +68,7 @@ const AuthForm: FC<AuthFormProps> = ({
                />
             </div>
 
+            {/* Password */}
             <div className={styles.formField}>
                <label>Password</label>
                <input

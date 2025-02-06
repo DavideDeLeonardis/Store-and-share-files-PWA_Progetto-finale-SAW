@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext.tsx';
 
 /**
- * Route che permette di accedere solo se l'utente è loggato
+ * Rotta privata per le pagine che richiedono l'autenticazione.
  */
 const PrivateRoute = ({ children }) => {
    const { user } = useAuth();

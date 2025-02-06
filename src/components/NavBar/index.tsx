@@ -9,6 +9,7 @@ interface NavBarProps {
    currentPage: 'dashboard' | 'profile';
 }
 
+// Navbar con props 'dashboard' | 'profile'
 const NavBar: FC<NavBarProps> = ({ currentPage }) => {
    // Definizione delle etichette per i link di navigazione in base alla pagina corrente
    const { leftLabel, switchLabel, switchLink } =
