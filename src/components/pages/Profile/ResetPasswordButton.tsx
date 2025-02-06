@@ -92,8 +92,9 @@ const ResetPasswordButton: React.FC = () => {
                setResetStatus('');
                setReauthRequired(false);
             }}
-            children="Reimposta Password"
-         />
+         >
+            Reimposta Password
+         </Button>
 
          {showReset && (
             <div className={styles.resetSection}>
@@ -125,8 +126,9 @@ const ResetPasswordButton: React.FC = () => {
                   onClick={handleResetPassword}
                   className={styles.confirmResetButton}
                   disabled={isUpdatingPassword}
-                  children="Conferma"
-               />
+               >
+                  Conferma
+               </Button>
 
                {isUpdatingPassword && <div className={styles.spinner} />}
             </div>

@@ -80,8 +80,9 @@ const AuthForm: FC<AuthFormProps> = ({
                type="submit"
                className={styles.submitButton}
                disabled={isLoading}
-               children={buttonLabel}
-            />
+            >
+               {buttonLabel}
+            </Button>
          </form>
 
          {/* Spinner se il form è in caricamento */}

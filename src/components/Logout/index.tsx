@@ -21,8 +21,9 @@ const Logout: React.FC = () => {
          className={styles.logoutButton}
          onClick={handleLogout}
          variant="danger"
-         children="Logout"
-      />
+      >
+         Logout
+      </Button>
    );
 };
 

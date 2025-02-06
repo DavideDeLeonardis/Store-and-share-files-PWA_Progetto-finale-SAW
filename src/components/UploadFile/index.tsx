@@ -109,8 +109,9 @@ const UploadFile: React.FC = () => {
                onClick={handleUpload}
                disabled={isUploading}
                ref={uploadButtonRef} // forwardRef per spostare il focus
-               children="Carica"
-            />
+            >
+               Carica
+            </Button>
          </div>
 
          {/* Messaggio di stato dell'upload*/}

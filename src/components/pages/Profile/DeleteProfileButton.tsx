@@ -44,11 +44,9 @@ const DeleteProfileButton: React.FC = () => {
 
    return (
       <>
-         <Button
-            onClick={handleDeleteProfile}
-            className={styles.deleteButton}
-            children="Elimina Profilo"
-         />
+         <Button onClick={handleDeleteProfile} className={styles.deleteButton}>
+            Elimina Profilo
+         </Button>
 
          {actionMessage && (
             <p className={styles.actionMessage}>{actionMessage}</p>

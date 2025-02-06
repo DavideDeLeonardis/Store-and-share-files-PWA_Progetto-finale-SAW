@@ -100,8 +100,9 @@ const DeleteAllFilesButton: React.FC = () => {
             onClick={handleDeleteAllFiles}
             className={styles.deleteButton}
             disabled={isDeleting}
-            children="Elimina Tutti i File"
-         />
+         >
+            Elimina Tutti i File
+         </Button>
 
          {isDeleting && <div className={styles.spinner} />}
 
