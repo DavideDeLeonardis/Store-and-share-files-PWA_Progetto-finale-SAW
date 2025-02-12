@@ -5,6 +5,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { storage, db } from '../../firebase/firebaseConfig.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
 import Button from '../layout/Button/index.tsx';
+import Spinner from '../layout/Spinner/index.tsx';
 import useNotification from '../../hooks/useNotification.ts';
 
 import styles from './index.module.scss';
@@ -92,8 +93,7 @@ const UploadFile: React.FC = () => {
          <h3 className={styles.title}>Carica un file</h3>
 
          <div className={styles.uploadRow}>
-            {/* Spinner */}
-            {isUploading && <div className={styles.spinner} />}
+            {isUploading && <Spinner display="inline-block" />}
 
             <input
                type="file"

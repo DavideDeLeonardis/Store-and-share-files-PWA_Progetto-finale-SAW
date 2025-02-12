@@ -7,6 +7,7 @@ import {
 
 import { useAuth } from '../../../contexts/AuthContext.tsx';
 import Button from '../../layout/Button/index.tsx';
+import Spinner from '../../layout/Spinner/index.tsx';
 
 import styles from './index.module.scss';
 
@@ -133,8 +134,7 @@ const ResetPasswordButton: React.FC = () => {
                   Conferma
                </Button>
 
-               {/* Spinner */}
-               {isUpdatingPassword && <div className={styles.spinner} />}
+               {isUpdatingPassword && <Spinner />}
             </div>
          )}
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { AuthFormProps } from './interfaces.ts';
 import Button from '../layout/Button/index.tsx';
+import Spinner from '../layout/Spinner/index.tsx';
 
 import styles from './index.module.scss';
 
@@ -76,8 +77,7 @@ const AuthForm: FC<AuthFormProps> = ({
             </Button>
          </form>
 
-         {/* Spinner se il form è in caricamento */}
-         {isLoading && <div className={styles.spinner} />}
+         {isLoading && <Spinner />}
 
          {title.toLowerCase() === 'login' ? (
             <p className={styles.altAuthLink}>
