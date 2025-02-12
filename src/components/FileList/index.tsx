@@ -18,12 +18,14 @@ import { FileData } from './interfaces.ts';
 import { useAuth } from '../../contexts/AuthContext.tsx';
 import { db, storage } from '../../firebase/firebaseConfig.ts';
 import FileElement from './FileElement/index.tsx';
+import Spinner from '../layout/Spinner/index.tsx';
 
 import styles from './index.module.scss';
 
 const FileList: React.FC = () => {
    const { user } = useAuth();
    const [files, setFiles] = useState<FileData[]>([]);
+   const [isLoading, setIsLoading] = useState<boolean>(true);
 
    /**
     * Per sottoscriversi agli aggiornamenti dei file dell'utente in Firestore.
@@ -31,6 +33,8 @@ const FileList: React.FC = () => {
     */
    useEffect(() => {
       if (!user) return;
+
+      setIsLoading(true);
 
       // Query per ottenere i file, filtrati per userId e ordinati dal più recente
       const db_query = query(
@@ -70,6 +74,7 @@ const FileList: React.FC = () => {
          }
 
          setFiles(fileList);
+         setIsLoading(false);
       });
 
       // Unsubscribe al dismount del componente, o cambio user
@@ -107,18 +112,24 @@ const FileList: React.FC = () => {
       }
    };
 
-   const file_list = files.map((file) => (
-      <FileElement key={file.docId} file={file} onDelete={handleDelete} />
-   ));
-
    return (
       <div className={styles.fileListContainer}>
          <h3>I miei file caricati</h3>
 
-         {files.length === 0 ? (
+         {isLoading ? (
+            <Spinner className={styles.spinner} />
+         ) : files.length === 0 ? (
             <p>Nessun file caricato</p>
          ) : (
-            <ul className={styles.fileList}>{file_list}</ul>
+            <ul className={styles.fileList}>
+               {files.map((file) => (
+                  <FileElement
+                     key={file.docId}
+                     file={file}
+                     onDelete={handleDelete}
+                  />
+               ))}
+            </ul>
          )}
       </div>
    );

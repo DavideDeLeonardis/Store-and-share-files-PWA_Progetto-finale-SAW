@@ -93,7 +93,7 @@ const UploadFile: React.FC = () => {
          <h3 className={styles.title}>Carica un file</h3>
 
          <div className={styles.uploadRow}>
-            {isUploading && <Spinner display="inline-block" />}
+            {isUploading && <Spinner className={styles.spinner} />}
 
             <input
                type="file"
