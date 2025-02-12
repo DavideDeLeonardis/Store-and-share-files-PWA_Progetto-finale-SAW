@@ -8,6 +8,14 @@ const LandingPage: React.FC = () => {
       <div className={styles.landingContainer}>
          <h1 className={styles.title}>Benvenuto!</h1>
 
+         <p className={styles.footerNote}>
+            Store & Share Files PWA è la piattaforma per archiviare, gestire e
+            condividere i tuoi documenti in modo semplice e sicuro. Con la
+            nostra app potrai caricare, visualizzare e accedere ai tuoi file
+            ovunque tu sia. Installa l'app sul tuo dispositivo e porta con te
+            tutti i tuoi file.
+         </p>
+
          <div className={styles.buttonContainer}>
             <Link to="/login" className={styles.linkButton}>
                Login
@@ -16,14 +24,6 @@ const LandingPage: React.FC = () => {
                Registrati
             </Link>
          </div>
-
-         <p className={styles.footerNote}>
-            Benvenuto in Store & Share Files PWA, la piattaforma per archiviare,
-            gestire e condividere i tuoi documenti in modo semplice e sicuro.
-            Con la nostra app potrai caricare, visualizzare e accedere ai tuoi
-            file ovunque tu sia. Installa l'app sul tuo dispositivo e porta con
-            te tutti i tuoi file.
-         </p>
       </div>
    );
 };

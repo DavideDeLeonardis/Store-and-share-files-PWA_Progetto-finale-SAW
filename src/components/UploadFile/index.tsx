@@ -119,7 +119,7 @@ const UploadFile: React.FC = () => {
 
          {/* Eventuali errori legati alle notifiche */}
          {notificationError && (
-            <div style={{ marginTop: '10px' }}>{notificationError}</div>
+            <div className={styles.notificationError}>{notificationError}</div>
          )}
       </div>
    );
