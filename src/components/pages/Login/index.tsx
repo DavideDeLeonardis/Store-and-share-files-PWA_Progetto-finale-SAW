@@ -28,8 +28,7 @@ const Login: React.FC = () => {
          navigate('/dashboard');
       } catch (err: unknown) {
          console.error(err);
-         const message: string = getErrorMessage(err);
-         setError(message);
+         setError(getErrorMessage(err));
       } finally {
          setIsLoading(false);
       }

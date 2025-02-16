@@ -6,11 +6,14 @@ import { FirebaseError } from 'firebase/app';
  */
 
 const errorMessages: Record<string, string> = {
-   'auth/email-already-in-use': 'Email già in uso.',
    'auth/weak-password': 'La password deve contenere almeno 6 caratteri.',
    'auth/invalid-email': 'Indirizzo email non valido.',
+   'auth/invalid-credential': 'Credenziali non trovate.',
+   'auth/email-already-in-use': 'Email già in uso.',
    'auth/user-not-found': 'Utente non trovato.',
    'auth/wrong-password': 'Password errata.',
+   'auth/popup-closed-by-user':
+      'Hai chiuso il popup di autenticazione prima di selezionare un account.',
 };
 
 const mapFirebaseErrorCodeToMessage = (code: string): string => {
