@@ -6,7 +6,7 @@ import AuthForm from '../../AuthForm/index.tsx';
 import useFirebaseErrorMessage from '../../../hooks/useFirebaseErrorMessage.ts';
 
 const Login: React.FC = () => {
-   const { login } = useAuth();
+   const { login, signInWithGoogle } = useAuth();
    const navigate = useNavigate(); // Hook di React Router
    const { getErrorMessage } = useFirebaseErrorMessage();
 
@@ -21,7 +21,7 @@ const Login: React.FC = () => {
       e.preventDefault();
       setIsLoading(true);
 
-      // Login con Firebase e navigazione alla dashboard
+      // Login con Firebase
       try {
          await login(email, password);
          setError('');
@@ -30,6 +30,21 @@ const Login: React.FC = () => {
          console.error(err);
          const message: string = getErrorMessage(err);
          setError(message);
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   // Login con Google
+   const handleGoogle = async () => {
+      setIsLoading(true);
+
+      try {
+         await signInWithGoogle();
+         navigate('/dashboard');
+      } catch (err) {
+         console.error(err);
+         setError(getErrorMessage(err));
       } finally {
          setIsLoading(false);
       }
@@ -48,6 +63,7 @@ const Login: React.FC = () => {
             setPassword(e.target.value)
          }
          onSubmit={handleSubmit}
+         onGoogleSignIn={handleGoogle}
          buttonLabel="Accedi"
          isLoading={isLoading}
       />

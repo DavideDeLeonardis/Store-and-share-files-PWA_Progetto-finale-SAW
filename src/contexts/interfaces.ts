@@ -8,9 +8,10 @@ export interface UserProfile {
 export interface AuthContextType {
    user: User | null;
    profile: UserProfile | null;
-   login: (email: string, password: string) => Promise<void>;
-   logout: () => Promise<void>;
    signUp: (email: string, password: string) => Promise<UserCredential>;
+   login: (email: string, password: string) => Promise<void>;
+   signInWithGoogle: () => Promise<void>;
+   logout: () => Promise<void>;
 }
 
 export interface AuthProviderProps {

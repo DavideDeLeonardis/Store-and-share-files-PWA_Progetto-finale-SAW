@@ -19,6 +19,7 @@ const AuthForm: FC<AuthFormProps> = ({
    onEmailChange,
    onPasswordChange,
    onSubmit,
+   onGoogleSignIn,
    buttonLabel,
    isLoading,
    error,
@@ -67,14 +68,30 @@ const AuthForm: FC<AuthFormProps> = ({
                />
             </div>
 
-            {/* Submit form */}
-            <Button
-               type="submit"
-               className={styles.submitButton}
-               disabled={isLoading}
-            >
-               {buttonLabel}
-            </Button>
+            <div className={styles.formButtonGroup}>
+               {/* Submit */}
+               <Button
+                  type="submit"
+                  className={styles.submitButton}
+                  disabled={isLoading}
+               >
+                  {buttonLabel}
+               </Button>
+
+               {/* Google sign-in se in form singin */}
+               {onGoogleSignIn && (
+                  <>
+                     <span>o</span>
+                     <Button
+                        type="button"
+                        className={styles.googleButton}
+                        onClick={onGoogleSignIn}
+                     >
+                        Accedi con Google
+                     </Button>
+                  </>
+               )}
+            </div>
          </form>
 
          {isLoading && <Spinner />}
