@@ -35,7 +35,7 @@ this.addEventListener('fetch', (event) => {
       );
 });
 
-// Gestione delle Notifiche Push**
+// Gestione delle Notifiche Push
 this.addEventListener('push', (event) => {
    const data = event.data?.json() || {
       title: 'Notifica',
