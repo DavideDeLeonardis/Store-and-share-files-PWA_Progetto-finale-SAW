@@ -26,9 +26,9 @@ const useNotification = () => {
       if (permission === 'default')
          Notification.requestPermission().then((perm) => {
             setPermission(perm);
-            if (perm === 'denied') {
+
+            if (perm === 'denied')
                setNotificationError('Le notifiche sono disabilitate.');
-            }
          });
       else if (permission === 'denied') {
          // Se la permission è già stata negata, mostriamo un messaggio più esplicativo
