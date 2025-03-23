@@ -97,7 +97,7 @@ const UploadFile: React.FC = () => {
 
             <input
                type="file"
-               // ! ACCETTATi TUTTI I FILE, anche file .exe, ...
+               // ! ACCETTATI TUTTI I TIPI Di FILE, anche .exe, ...
                onChange={handleFileChange}
                ref={fileInputRef}
                className={styles.fileInput}
