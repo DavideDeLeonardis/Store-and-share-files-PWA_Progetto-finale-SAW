@@ -63,7 +63,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
          }
       });
 
-      // Cleanup quando unmount del componente.
+      // Cleanup all'unmount del componente.
       return unsubscribe;
    }, []);
 
