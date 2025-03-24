@@ -24,7 +24,7 @@ import {
    AuthProviderProps,
 } from './interfaces.ts';
 
-// Creazione del contesto di autenticazione.
+// Creazione del context di autenticazione.
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**
@@ -54,7 +54,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                   setProfile(null);
                }
             } catch (error) {
-               console.error('Errore fetch user profile:', error);
+               console.error('Error fetch user profile:', error);
                setProfile(null);
             }
          else {
@@ -92,13 +92,12 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
          const userRef = doc(db, 'users', googleUser.uid);
          const snap = await getDoc(userRef);
 
-         if (!snap.exists()) {
+         if (!snap.exists())
             await setDoc(userRef, {
                username: googleUser.displayName || 'Utente Google',
                email: googleUser.email,
                createdAt: new Date(),
             });
-         }
       } catch (error) {
          console.error('Errore autenticazione con Google:', error);
       }
@@ -108,7 +107,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       await signOut(auth);
    };
 
-   // Context passato a tutti i componenti figli.
+   // Context passato ai componenti figli.
    return (
       <AuthContext.Provider
          value={{
@@ -131,7 +130,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 export function useAuth(): AuthContextType {
    const context = useContext(AuthContext);
 
-   if (!context) throw new Error('useAuth deve essere usato con AuthProvider.');
+   if (!context) throw new Error('Errore in useAuth');
 
    return context;
 }
