@@ -1,6 +1,6 @@
 # Store & Share Files PWA
 
-Store & Share Files è un'applicazione web progressiva per l'archiviazione e la condivisione fra dispositivi di file. L'app supporta l'autenticazione (login o signup), il caricamento di molti tipi di documenti e la visualizzazione (anteprima disponibile solo su PDF); disponibile pagina offline, installazione e notifiche all'upload di un documento.
+Store & Share Files è un'applicazione web progressiva per l'archiviazione di file. Previa autenticazione, l'app supporta il caricamento di molti tipi di documenti e la visualizzazione di essi (anteprima disponibile solo su PDF); disponibile pagina offline, installazione e notifiche all'upload di un documento.
 
 ## URL di Destinazione
 
