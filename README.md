@@ -13,7 +13,7 @@ Store & Share Files è un'applicazione web progressiva per l'archiviazione di fi
 
 ```sh
 $ git clone https://github.com/DavideDeLeonardis/Store-and-share-files-PWA_Progetto-SAW.git
-$ cd store-and-share-files-pwa
+$ cd Store-and-share-files-PWA_Progetto-SAW
 ```
 
 ### Installa le dipendenze
