@@ -16,6 +16,18 @@ $ git clone https://github.com/DavideDeLeonardis/Store-and-share-files-PWA_Proge
 $ cd Store-and-share-files-PWA_Progetto-SAW
 ```
 
+### Configura Firebase
+
+Crea un file `.env` nella root del progetto e aggiungi le credenziali Firebase:
+```env
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
+```
+
 ### Installa le dipendenze
 
 ```sh
